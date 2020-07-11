@@ -1,16 +1,16 @@
-# Virtual Assistant
+# 🎙 Virtual Assistant
 
 This is a prototype for the final thesis of my [Communication Design degree](https://kd.htw-berlin.de/international-en/) titled _Multimodal User Interfaces for Virtual Assistants_.
 
-## Design Files
+## 📝 Design Files
 
 The static designs, wireframes and more can be accessed on [Figma](https://www.figma.com/file/geVuMQxplJGxt0LFVVKj13/Virtual-Assistant)
 
-## Supervisor
+## 👥 Supervisor
 
 * [Prof. Andreas Ingerl](http://ingerl.com)
 
-## Built With
+## 🛠 Built With
 
 * Love
 
