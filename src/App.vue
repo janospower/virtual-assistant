@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <div id="nav" class="blur">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
@@ -17,6 +17,9 @@
     --red-200: #ffc4c2;
     --color-primary: hsla(0, 0%, 0%, 1);
     --color-background: hsla(0, 0%, 100%, 1);
+    --color-background-blurred: rgba(245, 245, 245, 0.6);
+
+    --img-background: url('./assets/ios14-background-night.jpg');
 
     --gutter: 16px;
 
@@ -66,15 +69,20 @@
 
 html {
   box-sizing: border-box;
-  -webkit-text-size-adjust:100%
+  -webkit-text-size-adjust:100%;
   /* quotes: "“" "”"; */
+  background-image: var(--img-background);
+  background-size: cover;
+  min-height: 100%;
+  min-width: 100%;
+  overflow: hidden;
 }
 
 body {
   -webkit-font-smoothing: antialiased;
   font-family: 'system', '-apple-system','HelveticaNeue', sans-serif;
   color: var(--color-primary);
-  background-color: var(--color-background);
+  /* background-color: var(--color-background); */
 
   font: -apple-system-body
   /*
@@ -108,6 +116,9 @@ a, a:visited, a:active {
     :root {
         --color-primary: hsla(0, 0%, 100%, 1);
         --color-background: hsla(0, 0%, 0%, 1);
+        --color-background-blurred: rgba(37, 37, 37, 0.6);
+
+        --img-background: url('./assets/ios14-background-day.jpg');
 
         --color-gray-1: rgb(142, 142, 147);
         --color-gray-2: rgb(99, 99, 102);
@@ -125,6 +136,15 @@ a, a:visited, a:active {
         --color-teal: rgb(100, 210, 255);
         --color-yellow: rgb(255, 214, 10);
     }
+}
+
+.blur {
+  background-color: var(--color-background-blurred);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+
+.modal {
+  border-radius: 13px;
 }
 
 #app {
