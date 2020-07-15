@@ -1,0 +1,33 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+}
+
+main {
+  width: 431px;
+  height: 884px;
+  margin: 0px auto;
+  position: relative;
+  top: calc( 50vh - 442px );
+}
+
+section {
+  width: 100%;
+  height: 100%;
+  background-image: url('iPhone-11-Pro-mask.png');
+  background-size: contain;
+  position: absolute;
+}
+
+iframe {
+  position: absolute;
+  border: none;
+  outline: none;
+  top: 25px;
+  left: 28px;
+}

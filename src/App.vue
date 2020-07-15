@@ -19,7 +19,7 @@
     --color-background: hsla(0, 0%, 100%, 1);
     --color-background-blurred: rgba(245, 245, 245, 0.6);
 
-    --img-background: url('./assets/ios14-background-night.jpg');
+    --img-background: url('./assets/ios14-background-day.jpg');
 
     --gutter: 16px;
 
@@ -118,7 +118,7 @@ a, a:visited, a:active {
         --color-background: hsla(0, 0%, 0%, 1);
         --color-background-blurred: rgba(37, 37, 37, 0.6);
 
-        --img-background: url('./assets/ios14-background-day.jpg');
+        --img-background: url('./assets/ios14-background-night.jpg');
 
         --color-gray-1: rgb(142, 142, 147);
         --color-gray-2: rgb(99, 99, 102);
