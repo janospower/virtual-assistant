@@ -12,9 +12,6 @@
 :root {
   color-scheme: light dark;
 
-    --red-50: #fff3f2;
-    --red-100: #ffe6e5;
-    --red-200: #ffc4c2;
     --color-primary: hsla(0, 0%, 0%, 1);
     --color-background: hsla(0, 0%, 100%, 1);
     --color-background-blurred: rgba(245, 245, 245, 0.6);

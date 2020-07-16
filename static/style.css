@@ -1,3 +1,37 @@
+:root {
+  --color-gray-1-day: rgb(142, 142, 147);
+  --color-gray-2-day: rgb(174, 174, 178);
+  --color-gray-3-day: rgb(199, 199, 204);
+  --color-gray-4-day: rgb(209, 209, 214);
+  --color-gray-5-day: rgb(229, 229, 234);
+  --color-gray-6-day: rgb(242, 242, 247);
+  --color-blue-day: rgb(0, 122, 255);
+  --color-green-day: rgb(52, 199, 89);
+  --color-indigo-day: rgb(88, 86, 214);
+  --color-orange-day: rgb(255, 149, 0);
+  --color-pink-day: rgb(255, 45, 85);
+  --color-purple-day: rgb(175, 82, 222);
+  --color-red-day: rgb(255, 59, 48);
+  --color-teal-day: rgb(90, 200, 250);
+  --color-yellow-day: rgb(255, 204, 0);
+
+  --color-gray-1-night: rgb(142, 142, 147);
+  --color-gray-2-night: rgb(99, 99, 102);
+  --color-gray-3-night: rgb(72, 72, 74);
+  --color-gray-4-night: rgb(58, 58, 60);
+  --color-gray-5-night: rgb(44, 44, 46);
+  --color-gray-6-night: rgb(28, 28, 30);
+  --color-blue-night: rgb(10, 132, 255);
+  --color-green-night: rgb(48, 209, 88);
+  --color-indigo-night: rgb(94, 92, 230);
+  --color-orange-night: rgb(255, 159, 10);
+  --color-pink-night: rgb(255, 55, 95);
+  --color-purple-night: rgb(191, 90, 242);
+  --color-red-night: rgb(255, 69, 58);
+  --color-teal-night: rgb(100, 210, 255);
+  --color-yellow-night: rgb(255, 214, 10);
+}
+
 * {
   margin: 0px;
   padding: 0px;
@@ -6,22 +40,33 @@
 
 body {
   height: 100vh;
+  background-color: white;
+  transition: background-color 1s cubic-bezier(0.165, 0.840, 0.440, 1.000);
+}
+
+.night-mode {
+  background-color: black;
 }
 
 main {
   width: 431px;
-  height: 884px;
+  height: 862px;
   margin: 0px auto;
   position: relative;
-  top: calc( 50vh - 442px );
+  top: calc( 50vh - 431px );
 }
 
-section {
-  width: 100%;
-  height: 100%;
-  background-image: url('iPhone-11-Pro-mask.png');
-  background-size: contain;
+.mask {
   position: absolute;
+}
+
+#iphone-shape {
+  fill: var(--color-gray-6-day);
+  transition: fill .3s cubic-bezier(0.165, 0.840, 0.440, 1.000);
+}
+
+.night-mode #iphone-shape {
+  fill: var(--color-gray-6-night);
 }
 
 iframe {
@@ -30,4 +75,50 @@ iframe {
   outline: none;
   top: 25px;
   left: 28px;
+}
+
+aside {
+  position: absolute;
+  top: calc( 50vh + 431px - 60px );
+  right: calc( 50vw + 216px + 80px );
+  width: 60px;
+  height: 60px;
+}
+
+button {
+  border: none;
+  outline: none;
+	font: inherit;
+	cursor: pointer;
+  background: inherit;
+}
+
+.btn-day-night-mode {
+  background-color: var(--color-gray-6-day);
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color .3s cubic-bezier(0.165, 0.840, 0.440, 1.000),
+    transform 1s cubic-bezier(0.165, 0.840, 0.440, 1.000);
+}
+
+.night-mode .btn-day-night-mode {
+  background-color: var(--color-gray-6-night);
+  transform: rotate(180deg);
+}
+
+#icon-day-night-mode-stroke, #icon-day-night-mode-fill {
+  transition: all .3s cubic-bezier(0.165, 0.840, 0.440, 1.000);
+}
+
+.night-mode #icon-day-night-mode-stroke {
+  stroke: white;
+}
+
+.night-mode #icon-day-night-mode-fill {
+  fill: white;
 }
