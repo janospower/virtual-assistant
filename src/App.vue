@@ -1,14 +1,36 @@
 <template>
   <div id="app">
-    <div id="nav" class="blur">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <header>
+      <div class="status-bar status-bar-left">
+        <span>{{ timenow }}</span>
+      </div>
+      <div class="status-bar status-bar-right">
+        <img src="./assets/status-bar-right-side.svg" alt="Status indicators">
+      </div>
+    </header>
     <router-view/>
   </div>
 </template>
 
 <script>
+  export default{
+    data() {
+      return {
+        timenow: new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })
+      }
+    },
+    methods: {
+      time() {
+        this.timenow = new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })
+      },
+    },
+    mounted() {
+      this.interval = setInterval(this.time, 10000)
+    },
+    beforeDestroy() {
+      clearInterval(this.interval)
+    }
+  };
   window.addEventListener('message', function(event) {
     if (event.data) { // night
       document.documentElement.setAttribute("data-theme", "night");
@@ -116,7 +138,7 @@ html {
 
 body {
   -webkit-font-smoothing: antialiased;
-  font-family: 'system', '-apple-system','HelveticaNeue', sans-serif;
+  font-family: system-ui, 'system', '-apple-system','HelveticaNeue', sans-serif;
   color: var(--color-primary);
   /* background-color: var(--color-background); */
 
@@ -157,19 +179,21 @@ a, a:visited, a:active {
   border-radius: 13px;
 }
 
-#app {
-
+.status-bar {
+  color: white;
+  padding: 17px;
+  position: fixed;
+  top: 0px;
+  font-weight: 600;
+  font-size: 15px;
 }
 
-#nav {
-
+.status-bar-left {
+  left: 0px;
 }
 
-#nav a {
-
+.status-bar-right {
+  right: 0px;
 }
 
-#nav a.router-link-exact-active {
-
-}
 </style>

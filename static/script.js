@@ -3,8 +3,6 @@ const btnDayNightMode = document.querySelector('.btn-day-night-mode');
 
 let app = window.frames.app;
 
-app.postMessage(body.classList[0], "*");
-
 btnDayNightMode.onclick = function() {
   body.classList.toggle('night-mode');
   app.postMessage(body.classList[0], "*");
@@ -12,6 +10,10 @@ btnDayNightMode.onclick = function() {
 
 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
     body.classList.add('night-mode');
+    app.postMessage(body.classList[0], "*");
+}
+else {
+    body.classList.remove('night-mode');
     app.postMessage(body.classList[0], "*");
 }
 
