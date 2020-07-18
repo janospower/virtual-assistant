@@ -8,13 +8,26 @@
   </div>
 </template>
 
+<script>
+  window.addEventListener('message', function(event) {
+    if (event.data) { // night
+      document.documentElement.setAttribute("data-theme", "night");
+    }
+    else { // day
+      document.documentElement.setAttribute("data-theme", "day");
+    }
+  });
+</script>
+
 <style>
 :root {
-  color-scheme: light dark;
+  /* color-scheme: light dark; */
 
     --color-primary: hsla(0, 0%, 0%, 1);
     --color-background: hsla(0, 0%, 100%, 1);
     --color-background-blurred: rgba(245, 245, 245, 0.6);
+
+    --cubic-ease: cubic-bezier(0.165, 0.840, 0.440, 1.000);
 
     --img-background: url('./assets/ios14-background-day.jpg');
 
@@ -50,6 +63,32 @@
     --color-red: rgb(255, 59, 48);
     --color-teal: rgb(90, 200, 250);
     --color-yellow: rgb(255, 204, 0);
+}
+
+/* @media (prefers-color-scheme: dark) {
+    :root { */
+[data-theme="night"] {
+  --color-primary: hsla(0, 0%, 100%, 1);
+  --color-background: hsla(0, 0%, 0%, 1);
+  --color-background-blurred: rgba(37, 37, 37, 0.6);
+
+  --img-background: url('./assets/ios14-background-night.jpg');
+
+  --color-gray-1: rgb(142, 142, 147);
+  --color-gray-2: rgb(99, 99, 102);
+  --color-gray-3: rgb(72, 72, 74);
+  --color-gray-4: rgb(58, 58, 60);
+  --color-gray-5: rgb(44, 44, 46);
+  --color-gray-6: rgb(28, 28, 30);
+  --color-blue: rgb(10, 132, 255);
+  --color-green: rgb(48, 209, 88);
+  --color-indigo: rgb(94, 92, 230);
+  --color-orange: rgb(255, 159, 10);
+  --color-pink: rgb(255, 55, 95);
+  --color-purple: rgb(191, 90, 242);
+  --color-red: rgb(255, 69, 58);
+  --color-teal: rgb(100, 210, 255);
+  --color-yellow: rgb(255, 214, 10);
 }
 
 *{
@@ -107,32 +146,6 @@ a, a:visited, a:active {
   color: inherit;
   text-decoration:none;
   font-style: normal;
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --color-primary: hsla(0, 0%, 100%, 1);
-        --color-background: hsla(0, 0%, 0%, 1);
-        --color-background-blurred: rgba(37, 37, 37, 0.6);
-
-        --img-background: url('./assets/ios14-background-night.jpg');
-
-        --color-gray-1: rgb(142, 142, 147);
-        --color-gray-2: rgb(99, 99, 102);
-        --color-gray-3: rgb(72, 72, 74);
-        --color-gray-4: rgb(58, 58, 60);
-        --color-gray-5: rgb(44, 44, 46);
-        --color-gray-6: rgb(28, 28, 30);
-        --color-blue: rgb(10, 132, 255);
-        --color-green: rgb(48, 209, 88);
-        --color-indigo: rgb(94, 92, 230);
-        --color-orange: rgb(255, 159, 10);
-        --color-pink: rgb(255, 55, 95);
-        --color-purple: rgb(191, 90, 242);
-        --color-red: rgb(255, 69, 58);
-        --color-teal: rgb(100, 210, 255);
-        --color-yellow: rgb(255, 214, 10);
-    }
 }
 
 .blur {
