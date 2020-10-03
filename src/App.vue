@@ -33,7 +33,9 @@
   };
   window.addEventListener('message', function(event) {
     if (event.data) { // night
-      document.documentElement.setAttribute("data-theme", "night");
+      if (event.data == "night-mode") {
+        document.documentElement.setAttribute("data-theme", "night");
+      }
     }
     else { // day
       document.documentElement.setAttribute("data-theme", "day");
@@ -164,7 +166,9 @@ h2 {
   font: -apple-system-subheadline
 }
 
-a, a:visited, a:active {
+a,
+a:visited,
+a:active {
   color: inherit;
   text-decoration:none;
   font-style: normal;

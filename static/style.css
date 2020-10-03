@@ -60,6 +60,7 @@ main {
 
 .mask {
   position: absolute;
+  pointer-events: none;
 }
 
 #iphone-shape {
@@ -95,7 +96,7 @@ button {
   background: inherit;
 }
 
-.btn-day-night-mode {
+.btn--day-night-mode {
   background-color: var(--color-gray-6-day);
   border-radius: 50%;
   width: 100%;
@@ -108,7 +109,7 @@ button {
     transform 1s var(--cubic-ease)
 }
 
-.night-mode .btn-day-night-mode {
+.night-mode .btn--day-night-mode {
   background-color: var(--color-gray-6-night);
   transform: rotate(180deg);
 }
