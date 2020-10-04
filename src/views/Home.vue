@@ -12,11 +12,9 @@
 
 <script>
   import SpeechToText from '@/components/speech-to-text.vue'
-  import VSquircle from '@/components/v-squircle.vue'
   export default{
     components: {
-      SpeechToText,
-      VSquircle
+      SpeechToText
     },
     data() {
       return {
