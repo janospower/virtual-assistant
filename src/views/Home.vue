@@ -3,8 +3,8 @@
     <router-link to="/about">About</router-link>
     <button @click="beginDetect">Start</button>
     <div class="mic-meter" v-bind:style="{ width: vol + 'px' }"></div>
-    <v-squircle radius="40px">
-      <span>test text</span>
+    <v-squircle radius="40px" >
+      <span>Test text</span>
       <speech-to-text ></speech-to-text>
     </v-squircle>
   </div>

@@ -44,10 +44,10 @@ export default {
     }
   },
   methods: {
-    squircle(radius) {
+    squircle(r) {
       return function (theta) {
-        let x = Math.pow(Math.abs(Math.cos(theta)), 2 / radius) * 50 * Math.sign(Math.cos(theta)) + 50;
-        let y = Math.pow(Math.abs(Math.sin(theta)), 2 / radius) * 50 * Math.sign(Math.sin(theta)) + 50;
+        let x = Math.pow(Math.abs(Math.cos(theta)), 2 / r) * 50 * Math.sign(Math.cos(theta)) + 50;
+        let y = Math.pow(Math.abs(Math.sin(theta)), 2 / r) * 50 * Math.sign(Math.sin(theta)) + 50;
         return {x,y};
       }
     },

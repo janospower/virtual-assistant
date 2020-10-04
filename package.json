@@ -12,7 +12,8 @@
     "vue": "^2.6.11",
     "vue-animejs": "^2.1.1",
     "vue-router": "^3.2.0",
-    "vue-speech": "^0.1.0"
+    "vue-speech": "^0.1.0",
+    "vue-squircle": "0.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",

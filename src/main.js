@@ -2,12 +2,12 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import VueAnime from 'vue-animejs';
-import VueSpeech from 'vue-speech';
+import VSquircle from "vue-squircle";
 
-
-Vue.use(VueSpeech);
 
 Vue.use(VueAnime);
+
+Vue.use(VSquircle);
 
 Vue.config.productionTip = false;
 
