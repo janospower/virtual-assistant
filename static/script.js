@@ -4,6 +4,7 @@ const btnSiri = document.querySelector('.btn--siri');
 const mask = document.querySelector('.mask');
 
 let app = window.frames.app;
+let isAwake = false;
 
 btnDayNightMode.onclick = function() {
   body.classList.toggle('night-mode');
@@ -30,10 +31,14 @@ window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
   }
 });
 
-btnSiri.addEventListener('click', event => {
+btnSiri.addEventListener('mousedown', event => {
   app.postMessage("wake", "*");
+  isAwake = true;
 });
 
-mask.addEventListener('click', event => {
-  event.preventDefault();
+window.addEventListener('mouseup', e => {
+  if (isAwake === true) {
+    app.postMessage("sleep", "*");
+    isAwake = false;
+  }
 });

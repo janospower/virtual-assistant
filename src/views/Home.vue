@@ -3,35 +3,25 @@
     <router-link to="/about">About</router-link>
     <button @click="beginDetect">Start</button>
     <div class="mic-meter" v-bind:style="{ width: vol + 'px' }"></div>
-    <vue-speech class="transcription" v-if="awake" @onTranscriptionEnd="onEnd" />
+    <speech-to-text ></speech-to-text>
   </div>
 </template>
 
 <script>
+  import SpeechToText from '@/components/speech-to-text.vue'
   export default{
+    components: {
+      SpeechToText
+    },
     data() {
       return {
         audioContext: null,
         mediaStreamSource: null,
         meter: null,
         vol: 100,
-        awake: false,
       }
     },
-    created: function () {
-      let _this = this;
-      window.addEventListener('message', function(event) {
-        if (event.data == "wake") {
-          _this.awake = true;
-        }
-      });
-    },
     methods: {
-      onEnd ({ lastSentence, transcription }) {
-        // `lastSentence` is the last sentence before the pause
-        // `transcription` is the full array of sentences
-        console.log( lastSentence, transcription );
-      },
       createAudioMeter(audioContext, clipLevel, averaging, clipLag) {
         const processor = audioContext.createScriptProcessor(512)
         processor.onaudioprocess = this.volumeAudioProcess
@@ -100,11 +90,5 @@
     top: 0px;
     bottom: 0px;
     background-color: hsla(0,0%,100%,0.8);
-  }
-  .transcription p::first-letter {
-    text-transform: uppercase;
-  }
-  .transcription p {
-    color: red;
   }
 </style>
