@@ -23,7 +23,7 @@ export default {
   props: {
     radius: {
       type: String,
-      default: '10px'
+      default: '25px'
     },
     smoothing: {
       type: Number,
@@ -31,7 +31,7 @@ export default {
     },
     padding: {
       type: String,
-      default: '10px'
+      default: '25px'
     },
     background: {
       type: String,
@@ -60,7 +60,7 @@ export default {
      .fill(0)
      .map((x, i) => i)
      .map(this.to_radians) // Defined as deg => deg * Math.PI / 180 elsewhere
-     .map(this.squircle(4)) // We'll use a border-radius of 4
+     .map(this.squircle(this.smoothing)) // We'll use a border-radius of 4
      .map(({ x, y }) => ({ x: Math.round(x * 10)/10, y: Math.round(y * 10)/10 })) // Round to the ones place
      .map(({ x, y }) => `${(x-50)*2}% ${(y-50)*2}%`);
     this.polygon.push('0% 0%')
