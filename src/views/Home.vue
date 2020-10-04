@@ -3,15 +3,19 @@
     <router-link to="/about">About</router-link>
     <button @click="beginDetect">Start</button>
     <div class="mic-meter" v-bind:style="{ width: vol + 'px' }"></div>
-    <speech-to-text ></speech-to-text>
+    <v-squircle radius="2px">
+      <speech-to-text ></speech-to-text>
+    </v-squircle>
   </div>
 </template>
 
 <script>
   import SpeechToText from '@/components/speech-to-text.vue'
+  import VSquircle from '@/components/v-squircle.vue'
   export default{
     components: {
-      SpeechToText
+      SpeechToText,
+      VSquircle
     },
     data() {
       return {
