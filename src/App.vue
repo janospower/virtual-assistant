@@ -26,22 +26,22 @@
       },
     },
     mounted() {
-      this.interval = setInterval(this.time, 10000)
+      this.interval = setInterval(this.time, 10000);
+      window.addEventListener('message', function(event) {
+        if (event.data) { // night
+          if (event.data == "night-mode") {
+            document.documentElement.setAttribute("data-theme", "night");
+          }
+        }
+        else { // day
+          document.documentElement.setAttribute("data-theme", "day");
+        }
+      });
     },
     beforeDestroy() {
       clearInterval(this.interval)
     }
   };
-  window.addEventListener('message', function(event) {
-    if (event.data) { // night
-      if (event.data == "night-mode") {
-        document.documentElement.setAttribute("data-theme", "night");
-      }
-    }
-    else { // day
-      document.documentElement.setAttribute("data-theme", "day");
-    }
-  });
 </script>
 
 <style>
@@ -51,6 +51,7 @@
     --color-primary: hsla(0, 0%, 0%, 1);
     --color-background: hsla(0, 0%, 100%, 1);
     --color-background-blurred: rgba(245, 245, 245, 0.6);
+    --color-cursor: hsla(0, 0%, 0%, 0.6);
 
     --cubic-ease: cubic-bezier(0.165, 0.840, 0.440, 1.000);
 
@@ -96,6 +97,7 @@
   --color-primary: hsla(0, 0%, 100%, 1);
   --color-background: hsla(0, 0%, 0%, 1);
   --color-background-blurred: rgba(37, 37, 37, 0.6);
+  --color-cursor: hsla(0, 0%, 100%, 0.6);
 
   --img-background: url('./assets/ios14-background-night.jpg');
 
@@ -202,12 +204,31 @@ a:active {
   right: 0px;
 }
 
+.cursor-fx__inner__outside {
+  background-color: hsla(0, 0%, 0%, 0.3) !important;
+  color: hsla(0, 0%, 100%, 0.3) !important;
+}
+
+.cursor-fx--hover .cursor-fx__inner__outside {
+  background-color: hsla(0, 0%, 40%, 0.2) !important;
+  color: hsla(0, 0%, 100%, 0.2) !important;
+}
+
+.cursor-fx__inner__inside {
+  color: var(--color-cursor) !important;
+}
+
+.cursor-fx, .cursor-fx > div {
+  z-index: 9999;
+}
+
+.v-squircle, .v-squircle--background {
+  z-index: 0;
+}
+
 .v-squircle--segment, .v-squircle--filler {
   background-color: var(--color-background-blurred);
   backdrop-filter: saturate(180%) blur(20px);
-}
-.v-squircle--background {
-  z-index: 50;
 }
 .v-squircle--slot {
   z-index: 100;
