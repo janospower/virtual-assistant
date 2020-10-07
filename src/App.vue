@@ -9,6 +9,7 @@
       </div>
     </header>
     <router-view/>
+    <cursor-fx />
   </div>
 </template>
 
@@ -119,6 +120,7 @@
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   margin: 0px;
   padding: 0px;
+  user-select: none;
 }
 
 *,
@@ -198,6 +200,10 @@ a:active {
 
 .status-bar-right {
   right: 0px;
+}
+
+.cursor-fx__inner__outside {
+  background-color: hsla(0, 0%, 50%, 0.5);
 }
 
 </style>
