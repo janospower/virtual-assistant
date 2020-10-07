@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @mouseleave="mouseInFrame = 0" @mouseenter="mouseInFrame = 1" >
     <header>
       <div class="status-bar status-bar-left">
         <span>{{ timenow }}</span>
@@ -9,7 +9,7 @@
       </div>
     </header>
     <router-view/>
-    <cursor-fx />
+    <cursor-fx :style="{ opacity: mouseInFrame }" />
   </div>
 </template>
 
@@ -17,6 +17,7 @@
   export default{
     data() {
       return {
+        mouseInFrame: 1,
         timenow: new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })
       }
     },
@@ -178,6 +179,10 @@ a:active {
   font-style: normal;
 }
 
+#app {
+  height: 100vh;
+}
+
 .blur {
   background-color: var(--color-background-blurred);
   backdrop-filter: saturate(180%) blur(20px);
@@ -224,6 +229,10 @@ a:active {
 
 .v-squircle, .v-squircle--background {
   z-index: 0;
+}
+
+.v-squircle {
+  padding: 0px 8px;
 }
 
 .v-squircle--segment, .v-squircle--filler {
