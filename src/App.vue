@@ -200,4 +200,16 @@ a:active {
   right: 0px;
 }
 
+.v-squircle--segment, .v-squircle--filler {
+  background-color: var(--color-background-blurred);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+.v-squircle--background {
+  z-index: 50;
+}
+.v-squircle--slot {
+  z-index: 100;
+  color: hsla(0, 0%, 100%, 1);
+}
+
 </style>
