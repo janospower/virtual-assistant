@@ -9,6 +9,7 @@
       </div>
     </header>
     <router-view/>
+    <div class="iphone--home-indicator"><div></div></div>
     <cursor-fx :style="{ opacity: mouseInFrame }" />
   </div>
 </template>
@@ -183,6 +184,22 @@ a:active {
   height: 100vh;
 }
 
+.iphone--home-indicator {
+  height: 5px;
+  width: 100%;
+  position: absolute;
+  bottom: 8px;
+  left: 0px;
+}
+
+.iphone--home-indicator div {
+  margin: 0 auto;
+  width: 134px;
+  height: 100%;
+  border-radius: 3px;
+  background-color: var(--color-primary);
+}
+
 .blur {
   background-color: var(--color-background-blurred);
   backdrop-filter: saturate(180%) blur(20px);
@@ -233,6 +250,9 @@ a:active {
 
 .v-squircle {
   padding: 0px 8px;
+  position: absolute;
+  width: 100%;
+  bottom: 34px;
 }
 
 .v-squircle--segment, .v-squircle--filler {
@@ -242,6 +262,7 @@ a:active {
 .v-squircle--slot {
   z-index: 100;
   color: hsla(0, 0%, 100%, 1);
+  font-weight: 600;
 }
 
 </style>

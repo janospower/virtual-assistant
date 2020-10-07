@@ -3,10 +3,15 @@
     <router-link to="/about">About</router-link>
     <button @click="beginDetect">Start</button>
     <div class="mic-meter" v-bind:style="{ width: vol + 'px' }"></div>
-    <v-squircle radius="40px" data-cursor-hover >
-      <span>Test text</span>
-      <speech-to-text ></speech-to-text>
-    </v-squircle>
+    <transition name="transcript">
+      <v-squircle
+       radius="20px"
+       padding="12px"
+       data-cursor-hover
+       v-if="wake" >
+        <speech-to-text></speech-to-text>
+      </v-squircle>
+    </transition>
   </div>
 </template>
 
@@ -18,6 +23,7 @@
     },
     data() {
       return {
+        wake: false,
         audioContext: null,
         mediaStreamSource: null,
         meter: null,
@@ -79,6 +85,14 @@
 
       },
     },
+    created: function () {
+      let _this = this;
+      window.addEventListener('message', function(event) {
+        if (event.data == "wake") {
+          _this.wake = true;
+        }
+      });
+    }
   };
 </script>
 

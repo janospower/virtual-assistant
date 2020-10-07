@@ -31,11 +31,9 @@
     },
     created: function () {
       let _this = this;
+      this.startSpeechRecognition();
       window.addEventListener('message', function(event) {
-        if (event.data == "wake") {
-          _this.startSpeechRecognition();
-        }
-        else if (event.data == "sleep") {
+        if (event.data == "sleep") {
           _this.endSpeechRecognition();
         }
       });
