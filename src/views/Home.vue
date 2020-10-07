@@ -3,12 +3,13 @@
     <router-link to="/about">About</router-link>
     <button @click="beginDetect">Start</button>
     <div class="mic-meter" v-bind:style="{ width: vol + 'px' }"></div>
-    <transition name="transcript">
+    <button @click="show = !show" type="button" name="button">asd</button>
+    <transition name="fade">
       <v-squircle
        radius="20px"
        padding="12px"
        data-cursor-hover
-       v-if="wake" >
+       v-if="show" >
         <speech-to-text></speech-to-text>
       </v-squircle>
     </transition>
@@ -23,6 +24,7 @@
     },
     data() {
       return {
+        show: true,
         wake: false,
         audioContext: null,
         mediaStreamSource: null,
@@ -97,15 +99,37 @@
 </script>
 
 <style scoped>
-  button {
-    margin: 50px;
-  }
+button {
+  margin: 50px;
+}
 
-  .mic-meter {
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    bottom: 0px;
-    background-color: hsla(0,0%,100%,0.8);
-  }
+.mic-meter {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  background-color: hsla(0,0%,100%,0.8);
+}
+
+.fade-enter-active {
+  background-color: red;
+  opacity: 1;
+}
+
+.fade-leave-active {
+  background-color: blue;
+  opacity: 1;
+}
+
+.fade-enter-from {
+  background-color: yellow;
+  transition: all 2s ease;
+  opacity: 0;
+}
+
+.fade-leave-to {
+  background-color: green;
+  transition: all 2s ease;
+  opacity: 0;
+}
 </style>
