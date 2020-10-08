@@ -3,16 +3,14 @@
     <router-link to="/about">About</router-link>
     <button @click="beginDetect">Start</button>
     <div class="mic-meter" v-bind:style="{ width: vol + 'px' }"></div>
-    <button @click="show = !show" type="button" name="button">asd</button>
-    <transition name="fade">
-      <v-squircle
-       radius="20px"
-       padding="12px"
-       data-cursor-hover
-       v-if="show" >
-        <speech-to-text></speech-to-text>
-      </v-squircle>
-    </transition>
+    <v-squircle
+     radius="20px"
+     padding="12px"
+     data-cursor-hover
+     v-if="wake"
+     @mounted="addClass" >
+      <speech-to-text></speech-to-text>
+    </v-squircle>
   </div>
 </template>
 
@@ -24,7 +22,6 @@
     },
     data() {
       return {
-        show: true,
         wake: false,
         audioContext: null,
         mediaStreamSource: null,
@@ -33,6 +30,10 @@
       }
     },
     methods: {
+      addClass() {
+        // ultra hacky way to wait for mounting of DOM element …
+        setTimeout( () => document.querySelector('.v-squircle').classList.add('v-squircle--active'), 10 )
+      },
       createAudioMeter(audioContext, clipLevel, averaging, clipLag) {
         const processor = audioContext.createScriptProcessor(512)
         processor.onaudioprocess = this.volumeAudioProcess
@@ -109,27 +110,5 @@ button {
   top: 0px;
   bottom: 0px;
   background-color: hsla(0,0%,100%,0.8);
-}
-
-.fade-enter-active {
-  background-color: red;
-  opacity: 1;
-}
-
-.fade-leave-active {
-  background-color: blue;
-  opacity: 1;
-}
-
-.fade-enter-from {
-  background-color: yellow;
-  transition: all 2s ease;
-  opacity: 0;
-}
-
-.fade-leave-to {
-  background-color: green;
-  transition: all 2s ease;
-  opacity: 0;
 }
 </style>

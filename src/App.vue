@@ -265,4 +265,15 @@ a:active {
   font-weight: 600;
 }
 
+.v-squircle {
+  transition: all 1s var(--cubic-ease);
+  opacity: 0;
+  transform: translate3d(0,40px,0);
+}
+
+.v-squircle.v-squircle--active {
+  opacity: 1;
+  transform: translate3d(0,0,0);
+}
+
 </style>
