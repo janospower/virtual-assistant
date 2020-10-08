@@ -3,14 +3,15 @@
     <router-link to="/about">About</router-link>
     <button @click="beginDetect">Start</button>
     <div class="mic-meter" v-bind:style="{ width: vol + 'px' }"></div>
-    <v-squircle
-     radius="20px"
-     padding="12px"
-     data-cursor-hover
-     v-if="wake"
-     @mounted="addClass" >
-      <speech-to-text></speech-to-text>
-    </v-squircle>
+    <transition name="transcript" appear>
+      <v-squircle
+       radius="20px"
+       padding="12px"
+       data-cursor-hover
+       v-if="wake" >
+        <speech-to-text></speech-to-text>
+      </v-squircle>
+    </transition>
   </div>
 </template>
 
@@ -30,10 +31,6 @@
       }
     },
     methods: {
-      addClass() {
-        // ultra hacky way to wait for mounting of DOM element …
-        setTimeout( () => document.querySelector('.v-squircle').classList.add('v-squircle--active'), 10 )
-      },
       createAudioMeter(audioContext, clipLevel, averaging, clipLag) {
         const processor = audioContext.createScriptProcessor(512)
         processor.onaudioprocess = this.volumeAudioProcess
@@ -110,5 +107,17 @@ button {
   top: 0px;
   bottom: 0px;
   background-color: hsla(0,0%,100%,0.8);
+}
+
+
+.transcript-enter-active,
+.transcript-leave-active {
+  transition: transform 0.4s var(--cubic-ease), opacity 0.4s linear;
+}
+
+.transcript-enter,
+.transcript-leave-to {
+  opacity: 0;
+  transform: translateY(0,40px,0);
 }
 </style>
