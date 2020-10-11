@@ -59,6 +59,7 @@
 
     --img-background: url('./assets/ios14-background-day.jpg');
     --img-background--blurred: url('./assets/ios14-background-day--blurred.png');
+    --img-background--text: url('./assets/ios14-background-day--text.png');
 
     --gutter: 16px;
 
@@ -104,6 +105,7 @@
 
   --img-background: url('./assets/ios14-background-night.jpg');
   --img-background--blurred: url('./assets/ios14-background-night--blurred.png');
+  --img-background--text: url('./assets/ios14-background-night--text.png');
 
   --color-gray-1: rgb(142, 142, 147);
   --color-gray-2: rgb(99, 99, 102);
@@ -141,6 +143,7 @@ html {
   /* quotes: "“" "”"; */
   background-image: var(--img-background);
   background-size: cover;
+  background-position: center;
   min-height: 100%;
   min-width: 100%;
   overflow: hidden;
@@ -263,8 +266,14 @@ a:active {
 }
 .v-squircle--slot {
   z-index: 100;
-  color: hsla(0, 0%, 100%, 1);
   font-weight: 600;
+  background-image: var(--img-background--text);
+  background-size: 750px;
+  background-position-x: center;
+  background-position-y: bottom;
+  background-clip: text;
+  /* color: hsla(0,0%,100%,0.2); */
+  color: transparent;
 }
 
 </style>

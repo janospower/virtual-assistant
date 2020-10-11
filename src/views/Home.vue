@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div class="mic-meter" v-bind:style="{ width: vol + 'px' }"></div>
+    <div class="mic-meter" v-bind:style="{ height: vol + 'px' }"></div>
     <transition name="transcript" appear>
       <Motion :value="offset" tag="div" spring="gentle">
         <v-squircle
@@ -30,7 +30,7 @@
         audioContext: null,
         mediaStreamSource: null,
         meter: null,
-        vol: 100,
+        vol: 0,
       }
     },
     methods: {
@@ -83,7 +83,7 @@
         // want "fast attack, slow release."
         _this.volume = Math.max(rms, _this.volume * _this.averaging)
 
-        this.vol = _this.volume * 10000;
+        this.vol = Math.log10(_this.volume * 1000 - 1.5)*100;
         console.log(this.vol);
 
       },
@@ -109,9 +109,9 @@ button {
 .mic-meter {
   position: absolute;
   right: 0px;
-  top: 0px;
+  left: 0px;
   bottom: 0px;
-  background-color: hsla(0,0%,100%,0.8);
+  background-color: hsla(0,100%,100%,0.8);
 }
 
 
