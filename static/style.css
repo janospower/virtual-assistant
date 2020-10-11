@@ -106,12 +106,20 @@ button {
   justify-content: center;
   transition:
     background-color .3s cubic-bezier(0.165, 0.840, 0.440, 1.000),
-    transform 1s var(--cubic-ease)
+    transform 1s var(--cubic-ease);
 }
 
 .night-mode .btn--day-night-mode {
   background-color: var(--color-gray-6-night);
   transform: rotate(180deg);
+}
+
+.btn--day-night-mode svg {
+  transition: transform .3s var(--cubic-ease);
+}
+
+.btn--day-night-mode:hover svg {
+  transform: scale(1.2);
 }
 
 #icon-day-night-mode-stroke, #icon-day-night-mode-fill {

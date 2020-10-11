@@ -2,11 +2,14 @@
   <div class="home">
     <div class="mic-meter" v-bind:style="{ height: vol + 'px' }"></div>
     <transition name="transcript" appear>
-      <Motion :value="offset" tag="div" spring="gentle">
+      <Motion
+       :value="offset"
+       tag="div"
+       spring="gentle"
+       data-cursor-hover >
         <v-squircle
          radius="20px"
          padding="12px"
-         data-cursor-hover
          v-if="wake"
          slot-scope="props"
          :style="{ transform: `translateY(${props.value}px)` }" >
@@ -14,14 +17,17 @@
         </v-squircle>
       </Motion>
     </transition>
+    <waves wave-height="[1,1,1,1,1]"></waves>
   </div>
 </template>
 
 <script>
   import SpeechToText from '@/components/speech-to-text.vue'
+  import Waves from '@/components/waves.vue'
   export default{
     components: {
-      SpeechToText
+      SpeechToText,
+      Waves
     },
     data() {
       return {
