@@ -58,6 +58,7 @@
     --cubic-ease: cubic-bezier(0.165, 0.840, 0.440, 1.000);
 
     --img-background: url('./assets/ios14-background-day.jpg');
+    --img-background--blurred: url('./assets/ios14-background-day--blurred.png');
 
     --gutter: 16px;
 
@@ -102,6 +103,7 @@
   --color-cursor: hsla(0, 0%, 100%, 0.6);
 
   --img-background: url('./assets/ios14-background-night.jpg');
+  --img-background--blurred: url('./assets/ios14-background-night--blurred.png');
 
   --color-gray-1: rgb(142, 142, 147);
   --color-gray-2: rgb(99, 99, 102);

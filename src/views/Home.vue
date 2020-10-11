@@ -1,16 +1,18 @@
 <template>
   <div class="home">
-    <router-link to="/about">About</router-link>
-    <button @click="beginDetect">Start</button>
     <div class="mic-meter" v-bind:style="{ width: vol + 'px' }"></div>
     <transition name="transcript" appear>
-      <v-squircle
-       radius="20px"
-       padding="12px"
-       data-cursor-hover
-       v-if="wake" >
-        <speech-to-text></speech-to-text>
-      </v-squircle>
+      <Motion :value="offset" tag="div" spring="gentle">
+        <v-squircle
+         radius="20px"
+         padding="12px"
+         data-cursor-hover
+         v-if="wake"
+         slot-scope="props"
+         :style="{ transform: `translateY(${props.value}px)` }" >
+          <speech-to-text></speech-to-text>
+        </v-squircle>
+      </Motion>
     </transition>
   </div>
 </template>
@@ -24,6 +26,7 @@
     data() {
       return {
         wake: false,
+        offset: 70,
         audioContext: null,
         mediaStreamSource: null,
         meter: null,
@@ -90,6 +93,8 @@
       window.addEventListener('message', function(event) {
         if (event.data == "wake") {
           _this.wake = true;
+          _this.offset = 0;
+          _this.beginDetect();
         }
       });
     }
@@ -112,12 +117,11 @@ button {
 
 .transcript-enter-active,
 .transcript-leave-active {
-  transition: transform 0.4s var(--cubic-ease), opacity 0.4s linear;
+  transition: opacity 0.4s linear;
 }
 
 .transcript-enter,
 .transcript-leave-to {
   opacity: 0;
-  transform: translateY(0,40px,0);
 }
 </style>

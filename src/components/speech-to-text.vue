@@ -17,7 +17,7 @@
       },
       text: {
         type: [String, null],
-        required: true
+        required: false
       }
     },
     data () {
