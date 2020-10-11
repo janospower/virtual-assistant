@@ -8,8 +8,8 @@
         <img src="./assets/status-bar-right-side.svg" alt="Status indicators">
       </div>
     </header>
-    <router-view/>
     <div class="iphone--home-indicator"><div></div></div>
+    <router-view/>
     <cursor-fx :style="{ opacity: mouseInFrame }" />
   </div>
 </template>
