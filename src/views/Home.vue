@@ -102,8 +102,12 @@
           _this.beginDetect();
           let counter = 0;
           _this.waveMover = setInterval(function(){
-            _this.waves.splice(counter, 1, _this.vol || 0); // Math.random()*1.5
-            console.log(_this.vol);
+            if (Math.random() > 0.9) {
+              _this.waves.splice(counter, 1, 0.1); // Math.random()*1.5
+            }
+            else {
+              _this.waves.splice(counter, 1, _this.vol || 0); // Math.random()*1.5
+            }
             counter += 1;
             if (counter > _this.waves.length - 1) {
               counter = 0;
