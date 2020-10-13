@@ -1,12 +1,33 @@
 <template>
-  <div class="home">
-    <transition name="transcript" appear>
+  <div
+   class="home"
+   :style="{ backgroundImage: homeBackgroundImage }"
+  >
+    <transition name="response" appear>
       <Motion
-       :value="offset"
+       :value="offsetResponse"
        tag="div"
        spring="gentle"
        data-cursor-hover >
         <v-squircle
+         class="responses"
+         radius="20px"
+         padding="12px"
+         v-if="offsetResponse != -70"
+         slot-scope="props"
+         :style="{ transform: `translateY(${props.value}px)` }" >
+          Hello.
+        </v-squircle>
+      </Motion>
+    </transition>
+    <transition name="transcript" appear>
+      <Motion
+       :value="offsetTranscript"
+       tag="div"
+       spring="gentle"
+       data-cursor-hover >
+        <v-squircle
+         class="transcripts"
          radius="20px"
          padding="12px"
          v-if="wake"
@@ -32,7 +53,9 @@
       return {
         wake: false,
         waves: [0,0,0,0,0],
-        offset: 70,
+        offsetTranscript: 70,
+        offsetResponse: -70,
+        homeBackgroundImage: "var(--img-background)",
         audioContext: null,
         mediaStreamSource: null,
         meter: null,
@@ -98,7 +121,8 @@
       window.addEventListener('message', function(event) {
         if (event.data == "wake") {
           _this.wake = true;
-          _this.offset = 0;
+          _this.offsetTranscript = 0;
+          _this.homeBackgroundImage = "var(--img-background--blurred)";
           _this.beginDetect();
           let counter = 0;
           _this.waveMover = setInterval(function(){
@@ -115,6 +139,7 @@
           }, 30);
         }
         else if (event.data == "sleep") {
+          _this.offsetResponse = 0;
           clearInterval(_this.waveMover);
           _this.waves = [0,0,0,0,0];
         }
@@ -124,6 +149,14 @@
 </script>
 
 <style scoped>
+.home {
+  transition: background-image .3s var(--cubic-ease);
+  background-size: 120vh;
+  background-position: center;
+  min-height: 100%;
+  min-width: 100%;
+}
+
 button {
   margin: 50px;
 }
@@ -136,14 +169,33 @@ button {
   background-color: hsla(0,100%,100%,0.8);
 }
 
+.transcripts {
+  bottom: 80px;
+}
+
+.transcripts >>> .v-squircle--slot {
+  background-position-y: bottom;
+}
+
+.responses {
+  top: 80px;
+}
+
+.responses >>> .v-squircle--slot {
+  background-position-y: top;
+}
 
 .transcript-enter-active,
-.transcript-leave-active {
-  transition: opacity 0.4s linear;
+.transcript-leave-active,
+.response-enter-active,
+.response-leave-active {
+  transition: opacity .4s linear;
 }
 
 .transcript-enter,
-.transcript-leave-to {
+.transcript-leave-to,
+.response-enter,
+.response-leave-to {
   opacity: 0;
 }
 </style>

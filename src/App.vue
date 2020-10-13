@@ -141,11 +141,6 @@ html {
   box-sizing: border-box;
   -webkit-text-size-adjust:100%;
   /* quotes: "“" "”"; */
-  background-image: var(--img-background);
-  background-size: cover;
-  background-position: center;
-  min-height: 100%;
-  min-width: 100%;
   overflow: hidden;
 }
 
@@ -257,12 +252,11 @@ a:active {
   padding: 0px 8px;
   position: absolute;
   width: 100%;
-  bottom: 34px;
 }
 
 .v-squircle--segment, .v-squircle--filler {
   background-color: var(--color-background-blurred);
-  backdrop-filter: saturate(180%) blur(20px);
+  /* backdrop-filter: saturate(180%) blur(20px); */
 }
 .v-squircle--slot {
   z-index: 100;
@@ -270,8 +264,8 @@ a:active {
   background-image: var(--img-background--text);
   background-size: 750px;
   background-position-x: center;
-  background-position-y: bottom;
   background-clip: text;
+  min-height: 42px;
   /* color: hsla(0,0%,100%,0.2); */
   color: transparent;
 }
