@@ -17,7 +17,6 @@
       </Motion>
     </transition>
     <waves :wave-height="waves"></waves>
-    <button type="button" @click="waves=[0.5,1.5,1,1.2,0.8]" name="button">asd</button>
   </div>
 </template>
 
@@ -104,9 +103,14 @@
           _this.beginDetect();
         }
       });
+      let counter = 0;
       setInterval(function(){
-        _this.waves = [Math.random(),Math.random(),Math.random(),Math.random(),Math.random()];
-      }, 300);
+        _this.waves.splice(counter, 1, Math.random()*1.5);
+        counter += 1;
+        if (counter > _this.waves.length - 1) {
+          counter = 0;
+        }
+      }, 100);
     }
   };
 </script>
