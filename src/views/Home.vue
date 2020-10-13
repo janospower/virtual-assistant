@@ -16,7 +16,7 @@
         </v-squircle>
       </Motion>
     </transition>
-    <waves :wave-height="waves"></waves>
+    <waves :wave-height="waves" v-if="wake"></waves>
   </div>
 </template>
 
@@ -37,6 +37,7 @@
         mediaStreamSource: null,
         meter: null,
         vol: 0,
+        waveMover: null,
       }
     },
     methods: {
@@ -89,9 +90,7 @@
         // want "fast attack, slow release."
         _this.volume = Math.max(rms, _this.volume * _this.averaging)
 
-        this.vol = Math.log10(_this.volume * 1000 - 1.5)*100;
-        console.log(this.vol);
-
+        this.vol = Math.max(0,Math.log10(_this.volume * 1000 - 2)/2);
       },
     },
     created: function () {
@@ -101,16 +100,21 @@
           _this.wake = true;
           _this.offset = 0;
           _this.beginDetect();
+          let counter = 0;
+          _this.waveMover = setInterval(function(){
+            _this.waves.splice(counter, 1, _this.vol || 0); // Math.random()*1.5
+            console.log(_this.vol);
+            counter += 1;
+            if (counter > _this.waves.length - 1) {
+              counter = 0;
+            }
+          }, 30);
+        }
+        else if (event.data == "sleep") {
+          clearInterval(_this.waveMover);
+          _this.waves = [0,0,0,0,0];
         }
       });
-      let counter = 0;
-      setInterval(function(){
-        _this.waves.splice(counter, 1, Math.random()*1.5);
-        counter += 1;
-        if (counter > _this.waves.length - 1) {
-          counter = 0;
-        }
-      }, 100);
     }
   };
 </script>

@@ -1,9 +1,9 @@
 <template>
   <p class="mb-0">
     <span v-if="sentences.length > 0" >
-      <span v-for="sentence in sentences" v-bind:key="sentence">{{sentence}}?</span>
+      <span v-for="sentence in sentences" v-bind:key="sentence" class="sentence">{{sentence}}?</span>
     </span>
-    <span>{{runtimeTranscription}}</span>
+    <span class="sentence">{{runtimeTranscription}}</span>
   </p>
 </template>
 
@@ -78,7 +78,7 @@
 
         recognition.addEventListener('end', () => {
           if (this.runtimeTranscription !== '') {
-            this.sentences.push(this.capitalizeFirstLetter(this.runtimeTranscription))
+            this.sentences.push(this.runtimeTranscription)
             this.$emit('update:text', `${this.text}${this.sentences.slice(-1)[0]}. `)
           }
           this.runtimeTranscription = ''
@@ -103,5 +103,10 @@
 </script>
 
 <style scoped>
-
+.sentence {
+  display: block;
+}
+.sentence:first-letter {
+  text-transform: uppercase;
+}
 </style>
