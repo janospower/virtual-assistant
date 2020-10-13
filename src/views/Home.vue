@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <div class="mic-meter" v-bind:style="{ height: vol + 'px' }"></div>
     <transition name="transcript" appear>
       <Motion
        :value="offset"
@@ -17,7 +16,8 @@
         </v-squircle>
       </Motion>
     </transition>
-    <waves wave-height="[1,1,1,1,1]"></waves>
+    <waves :wave-height="waves"></waves>
+    <button type="button" @click="waves=[0.5,1.5,1,1.2,0.8]" name="button">asd</button>
   </div>
 </template>
 
@@ -32,6 +32,7 @@
     data() {
       return {
         wake: false,
+        waves: [0,0,0,0,0],
         offset: 70,
         audioContext: null,
         mediaStreamSource: null,
@@ -103,6 +104,9 @@
           _this.beginDetect();
         }
       });
+      setInterval(function(){
+        _this.waves = [Math.random(),Math.random(),Math.random(),Math.random(),Math.random()];
+      }, 300);
     }
   };
 </script>
