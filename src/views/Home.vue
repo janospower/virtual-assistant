@@ -16,7 +16,7 @@
          v-if="offsetResponse != -70"
          slot-scope="props"
          :style="{ transform: `translateY(${props.value}px)` }" >
-          Hello.
+          {{responseText}}
         </v-squircle>
       </Motion>
     </transition>
@@ -55,6 +55,7 @@
         waves: [0,0,0,0,0],
         offsetTranscript: 70,
         offsetResponse: -70,
+        responseText: "Hellos",
         homeBackgroundImage: "var(--img-background)",
         audioContext: null,
         mediaStreamSource: null,
