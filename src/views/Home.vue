@@ -71,7 +71,7 @@
       heardKeyWord (keyword) {
         switch (keyword) {
           case "sun" || "sunset":
-            this.responseText = this.sunsetAzimuth;
+            this.responseText = this.sunsetAzimuth + " " + this.sunsetStr;
             this.offsetResponse = 0;
             break;
           case "moon":
@@ -87,10 +87,10 @@
         this.sunsetStr = times.sunset.getHours() + ':' + times.sunset.getMinutes();
 
         // get position of the sun (azimuth and altitude) at today's sunset
-        let sunsetPos = this.SunCalc.getPosition(times.sunset, 51.5, -0.1);
+        let sunsetPos = this.SunCalc.getPosition(times.sunset, long, lat);
 
         // get sunset azimuth in degrees
-        let direction = Math.round(sunsetPos.azimuth * 180 / Math.PI);
+        let direction = Math.round((sunsetPos.azimuth * 180 / Math.PI)+180);
         this.sunsetAzimuth = direction + "º " + this.getCardinal(direction);
       },
       getCardinal(angle) {
