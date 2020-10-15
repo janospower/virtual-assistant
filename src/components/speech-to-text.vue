@@ -26,7 +26,8 @@
         speaking: false,
         toggle: false,
         runtimeTranscription: '',
-        sentences: []
+        sentences: [],
+        keyWords: ["sun","sunset","moon"]
       }
     },
     created: function () {
@@ -49,7 +50,7 @@
         this.toggle = false
         this.$emit('speechend', {
           sentences: this.sentences,
-          text: this.sentences.join('. ')
+          text: this.sentences.join('. '),
         })
       },
       startSpeechRecognition () {
@@ -68,18 +69,24 @@
 
         recognition.addEventListener('speechend', event => {
           this.event = event;
-          this.speaking = false
+          this.speaking = false;
         })
 
         recognition.addEventListener('result', event => {
           const text = Array.from(event.results).map(result => result[0]).map(result => result.transcript).join('')
-          this.runtimeTranscription = text
+          this.runtimeTranscription = text;
         })
 
         recognition.addEventListener('end', () => {
           if (this.runtimeTranscription !== '') {
-            this.sentences.push(this.runtimeTranscription)
-            this.$emit('update:text', `${this.text}${this.sentences.slice(-1)[0]}. `)
+            this.sentences.push(this.runtimeTranscription);
+            this.$emit('update:text', `${this.text}${this.sentences.slice(-1)[0]}. `);
+            let transcript = this.sentences.slice(-1)[0];
+            for (var i = 0; i < this.keyWords.length; i++) {
+              if ( transcript.includes(this.keyWords[i]) ) {
+                this.$emit('recognized-key-word', this.keyWords[i]);
+              }
+            }
           }
           this.runtimeTranscription = ''
           recognition.stop()

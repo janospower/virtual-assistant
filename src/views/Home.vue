@@ -33,7 +33,7 @@
          v-if="wake"
          slot-scope="props"
          :style="{ transform: `translateY(${props.value}px)` }" >
-          <speech-to-text></speech-to-text>
+          <speech-to-text @recognized-key-word="heardKeyWord($event)"></speech-to-text>
         </v-squircle>
       </Motion>
     </transition>
@@ -65,6 +65,17 @@
       }
     },
     methods: {
+      heardKeyWord (keyword) {
+        switch (keyword) {
+          case "sun" || "sunset":
+            console.log("Sonne");
+            this.responseText = "Right over there";
+            this.offsetResponse = 0;
+            break;
+          case "moon":
+            console.log("Mond");
+        }
+      },
       createAudioMeter(audioContext, clipLevel, averaging, clipLag) {
         const processor = audioContext.createScriptProcessor(512)
         processor.onaudioprocess = this.volumeAudioProcess
@@ -140,7 +151,6 @@
           }, 30);
         }
         else if (event.data == "sleep") {
-          _this.offsetResponse = 0;
           clearInterval(_this.waveMover);
           _this.waves = [0,0,0,0,0];
         }
