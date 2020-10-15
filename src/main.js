@@ -5,12 +5,12 @@ import VueAnime from 'vue-animejs';
 import VSquircle from "vue-squircle";
 import CursorFx from '@luxdamore/vue-cursor-fx';
 import '@luxdamore/vue-cursor-fx/dist/CursorFx.css';
-import VueMotion from 'vue-motion'
-import SunCalc from 'suncalc'
+import VueMotion from 'vue-motion';
+// var SunCalc = require('suncalc');
+window.x = require('suncalc');
 
-Vue.use(SunCalc)
 
-Vue.use(VueMotion)
+Vue.use(VueMotion);
 
 Vue.use(CursorFx);
 

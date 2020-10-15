@@ -62,19 +62,48 @@
         meter: null,
         vol: 0,
         waveMover: null,
+        SunCalc: null,
+        sunsetStr: "",
+        sunsetAzimuth: ""
       }
     },
     methods: {
       heardKeyWord (keyword) {
         switch (keyword) {
           case "sun" || "sunset":
-            console.log("Sonne");
-            this.responseText = "Right over there";
+            this.responseText = this.sunsetAzimuth;
             this.offsetResponse = 0;
             break;
           case "moon":
             console.log("Mond");
         }
+      },
+      getSunInfo (long, lat) {
+        this.SunCalc = require('suncalc');
+        // get today's sunlight times for London
+        let times = this.SunCalc.getTimes(new Date(), long, lat);
+
+        // format sunset time from the Date object
+        this.sunsetStr = times.sunset.getHours() + ':' + times.sunset.getMinutes();
+
+        // get position of the sun (azimuth and altitude) at today's sunset
+        let sunsetPos = this.SunCalc.getPosition(times.sunset, 51.5, -0.1);
+
+        // get sunset azimuth in degrees
+        let direction = Math.round(sunsetPos.azimuth * 180 / Math.PI);
+        this.sunsetAzimuth = direction + "º " + this.getCardinal(direction);
+      },
+      getCardinal(angle) {
+        const degreePerDirection = 360 / 8;
+        const offsetAngle = angle + degreePerDirection / 2;
+        return (offsetAngle >= 0 * degreePerDirection && offsetAngle < 1 * degreePerDirection) ? "N"
+          : (offsetAngle >= 1 * degreePerDirection && offsetAngle < 2 * degreePerDirection) ? "NE"
+            : (offsetAngle >= 2 * degreePerDirection && offsetAngle < 3 * degreePerDirection) ? "E"
+              : (offsetAngle >= 3 * degreePerDirection && offsetAngle < 4 * degreePerDirection) ? "SE"
+                : (offsetAngle >= 4 * degreePerDirection && offsetAngle < 5 * degreePerDirection) ? "S"
+                  : (offsetAngle >= 5 * degreePerDirection && offsetAngle < 6 * degreePerDirection) ? "SW"
+                    : (offsetAngle >= 6 * degreePerDirection && offsetAngle < 7 * degreePerDirection) ? "W"
+                      : "NW";
       },
       createAudioMeter(audioContext, clipLevel, averaging, clipLag) {
         const processor = audioContext.createScriptProcessor(512)
@@ -129,6 +158,8 @@
       },
     },
     created: function () {
+      this.getSunInfo(52.5,13.4);
+
       let _this = this;
       window.addEventListener('message', function(event) {
         if (event.data == "wake") {
