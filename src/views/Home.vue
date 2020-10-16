@@ -4,6 +4,13 @@
    :style="{ backgroundImage: homeBackgroundImage }"
   >
     <!-- <button type="button" @click="heardKeyWord('sun')" name="button">sun</button> -->
+    <v-squircle
+     class="transcripts"
+     radius="20px"
+     padding="0px"
+     data-cursor-hover >
+     <compass></compass>
+    </v-squircle>
     <transition name="response" appear>
       <Motion
        :value="offsetResponse"
@@ -45,10 +52,12 @@
 <script>
   import SpeechToText from '@/components/speech-to-text.vue'
   import Waves from '@/components/waves.vue'
+  import Compass from '@/components/compass.vue'
   export default{
     components: {
       SpeechToText,
-      Waves
+      Waves,
+      Compass
     },
     data() {
       return {

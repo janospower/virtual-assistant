@@ -269,5 +269,4 @@ a:active {
   /* color: hsla(0,0%,100%,0.2); */
   color: transparent;
 }
-
 </style>
