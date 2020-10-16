@@ -17,6 +17,7 @@
 <g id="compass--crosshairs">
 <path id="compass--crosshair--horizontal" d="M112.25 166L220.25 166" stroke="white" stroke-width="0.5"/>
 <path id="compass--crosshair--vertical" d="M166.25 220L166.25 112" stroke="white" stroke-width="0.5"/>
+<path id="marker-line" d="M166 80L166 41" stroke="white" stroke-width="1.5"/>
 </g>
 </g>
 </svg>

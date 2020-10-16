@@ -7,7 +7,7 @@
     <v-squircle
      class="transcripts"
      radius="20px"
-     padding="0px"
+     padding="13px"
      data-cursor-hover >
      <compass></compass>
     </v-squircle>
