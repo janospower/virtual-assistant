@@ -3,6 +3,7 @@
    class="home"
    :style="{ backgroundImage: homeBackgroundImage }"
   >
+    <!-- <button type="button" @click="heardKeyWord('sun')" name="button">sun</button> -->
     <transition name="response" appear>
       <Motion
        :value="offsetResponse"
@@ -56,6 +57,8 @@
         offsetTranscript: 70,
         offsetResponse: -70,
         responseText: "Hellos",
+        responseAudioURL: "",
+        responseAudio: null,
         homeBackgroundImage: "var(--img-background)",
         audioContext: null,
         mediaStreamSource: null,
@@ -64,19 +67,22 @@
         waveMover: null,
         SunCalc: null,
         sunsetStr: "",
-        sunsetAzimuth: ""
+        sunsetAzimuth: "",
       }
     },
     methods: {
       heardKeyWord (keyword) {
         switch (keyword) {
           case "sun" || "sunset":
-            this.responseText = this.sunsetAzimuth + " " + this.sunsetStr;
+            this.responseText = "The sun will set right over there at " + this.sunsetStr + ".";
+            this.responseAudioURL = require("@/assets/audio/the-sun-will-set-right-over-there-at-2-past-4-in-the-afternoon--olivia--vocaltrf--2d--2d.mp3");
             this.offsetResponse = 0;
             break;
           case "moon":
             console.log("Mond");
         }
+        this.responseAudio = new Audio(this.responseAudioURL);
+        this.responseAudio.play();
       },
       getSunInfo (long, lat) {
         this.SunCalc = require('suncalc');
@@ -158,6 +164,7 @@
       },
     },
     created: function () {
+
       this.getSunInfo(52.5,13.4);
 
       let _this = this;
