@@ -39,23 +39,38 @@
 <script>
 export default {
   name: 'compass',
-  props: {
-
+  data() {
+    return {
+      centerX: 0,
+      centerY: 0,
+      offsetHorizontal: 0,
+      offsetVertical: 0,
+      magnitude: 0,
+      angle: 0
+    }
   },
   methods: {
     rotateCompass (event) {
-      let angle = event.clientX + event.clientY + "deg";
-      document.querySelector('#compass--rotate').style.transform = "rotate(" + angle + ")";
-      document.querySelector('#compass--info').style.transform = "rotate(-" + angle + ")";
-      document.querySelector('#compass--background > *').style.transform = "rotate(-" + angle + ")";
-      document.querySelector('#compass--N').style.transform = "rotate(-" + angle + ")";
-      document.querySelector('#compass--E').style.transform = "rotate(-" + angle + ")";
-      document.querySelector('#compass--S').style.transform = "rotate(-" + angle + ")";
-      document.querySelector('#compass--W').style.transform = "rotate(-" + angle + ")";
+      this.offsetHorizontal = event.clientX - this.centerX;
+      this.offsetVertical = event.clientY - this.centerY;
+      this.magnitude = Math.sqrt((this.offsetHorizontal ** 2)+(this.offsetVertical ** 2));
+      this.angle = Math.acos(this.offsetHorizontal / this.magnitude);
+      if (this.offsetVertical < 0) {
+        this.angle = 2 * Math.PI - this.angle;
+      }
+      document.querySelector('#compass--rotate').style.transform = "rotate(" + this.angle + "rad)";
+      document.querySelector('#compass--info').style.transform = "rotate(-" + this.angle + "rad)";
+      document.querySelector('#compass--background > *').style.transform = "rotate(-" + this.angle + "rad)";
+      document.querySelector('#compass--N').style.transform = "rotate(-" + this.angle + "rad)";
+      document.querySelector('#compass--E').style.transform = "rotate(-" + this.angle + "rad)";
+      document.querySelector('#compass--S').style.transform = "rotate(-" + this.angle + "rad)";
+      document.querySelector('#compass--W').style.transform = "rotate(-" + this.angle + "rad)";
     }
   },
   mounted() {
-    console.log(1);
+    const compass = document.querySelector('.compass svg');
+    this.centerX = compass.getBoundingClientRect().left + compass.getBoundingClientRect().width / 2;
+    this.centerY = compass.getBoundingClientRect().top + compass.getBoundingClientRect().height / 2;
   }
 }
 </script>
