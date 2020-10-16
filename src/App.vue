@@ -52,7 +52,7 @@
 
     --color-primary: hsla(0, 0%, 0%, 1);
     --color-background: hsla(0, 0%, 100%, 1);
-    --color-background-blurred: rgba(245, 245, 245, 0.6);
+    --color-background-blurred: hsla(222, 100%, 11%, 0.5);
     --color-cursor: hsla(0, 0%, 0%, 0.6);
 
     --cubic-ease: cubic-bezier(0.165, 0.840, 0.440, 1.000);
@@ -100,7 +100,7 @@
 [data-theme="night"] {
   --color-primary: hsla(0, 0%, 100%, 1);
   --color-background: hsla(0, 0%, 0%, 1);
-  --color-background-blurred: rgba(37, 37, 37, 0.6);
+  --color-background-blurred: hsla(222, 100%, 11%, 0.5);
   --color-cursor: hsla(0, 0%, 100%, 0.6);
 
   --img-background: url('./assets/ios14-background-night.jpg');
@@ -255,7 +255,7 @@ a:active {
 }
 
 .v-squircle--segment, .v-squircle--filler {
-  background-color: var(--color-background-blurred);
+  background-color: var(--color-background-blurred) !important;
   /* backdrop-filter: saturate(180%) blur(20px); */
 }
 .v-squircle--slot {
