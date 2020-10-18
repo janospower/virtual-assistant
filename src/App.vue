@@ -250,8 +250,6 @@ a:active {
 
 .v-squircle {
   padding: 0px 8px;
-  position: absolute;
-  width: 100%;
 }
 
 .v-squircle--segment, .v-squircle--filler {

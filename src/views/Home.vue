@@ -3,15 +3,8 @@
    class="home"
    :style="{ backgroundImage: homeBackgroundImage }"
   >
-    <!-- <button type="button" @click="heardKeyWord('sun')" name="button">sun</button> -->
-    <v-squircle
-     class="transcripts"
-     radius="20px"
-     padding="13px"
-     data-cursor-hover >
-     <compass></compass>
-    </v-squircle>
-    <transition name="response" appear>
+    <button type="button" @click="heardKeyWord('sun')" name="button">sun</button>
+    <transition name="dissolve" appear>
       <Motion
        :value="offsetResponse"
        tag="div"
@@ -28,23 +21,37 @@
         </v-squircle>
       </Motion>
     </transition>
-    <transition name="transcript" appear>
-      <Motion
-       :value="offsetTranscript"
-       tag="div"
-       spring="gentle"
-       data-cursor-hover >
+
+    <div class="bottom">
+      <transition name="dissolve" appear>
         <v-squircle
-         class="transcripts"
+         class="response--rich"
          radius="20px"
-         padding="12px"
-         v-if="wake"
-         slot-scope="props"
-         :style="{ transform: `translateY(${props.value}px)` }" >
-          <speech-to-text @recognized-key-word="heardKeyWord($event)"></speech-to-text>
+         padding="13px"
+         v-if="richResponse"
+         data-cursor-hover >
+         <compass></compass>
         </v-squircle>
-      </Motion>
-    </transition>
+      </transition>
+      <transition name="dissolve" appear>
+        <Motion
+         :value="transcriptStates.current.offset"
+         tag="div"
+         spring="gentle"
+         data-cursor-hover >
+          <v-squircle
+           class="transcripts"
+           radius="20px"
+           padding="12px"
+           v-if="true"
+           slot-scope="props"
+           :style="{ transform: `translateY(${props.value}px)` }" >
+            <speech-to-text @recognized-key-word="heardKeyWord($event)"></speech-to-text>
+          </v-squircle>
+        </Motion>
+      </transition>
+    </div>
+
     <waves :wave-height="waves" v-if="wake"></waves>
   </div>
 </template>
@@ -63,8 +70,23 @@
       return {
         wake: false,
         waves: [0,0,0,0,0],
-        offsetTranscript: 70,
+        transcriptStates: {
+          hidden: {
+            offset: 70,
+            opacity: 0
+          },
+          active: {
+            offset: 0,
+            opacity: 1
+          },
+          current: {
+            offset: 70,
+            opacity: 0
+          }
+        },
+        offsetResponseHidden: -70,
         offsetResponse: -70,
+        richResponse: false,
         responseText: "Hellos",
         responseAudioURL: "",
         responseAudio: null,
@@ -86,6 +108,8 @@
             this.responseText = "The sun will set right over there at " + this.sunsetStr + ".";
             this.responseAudioURL = require("@/assets/audio/the-sun-will-set-right-over-there-at-2-past-4-in-the-afternoon--olivia--vocaltrf--2d--2d.mp3");
             this.offsetResponse = 0;
+            this.transcriptStates.current.offset = this.transcriptStates.hidden.offset;
+            this.richResponse = true;
             break;
           case "moon":
             console.log("Mond");
@@ -180,7 +204,7 @@
       window.addEventListener('message', function(event) {
         if (event.data == "wake") {
           _this.wake = true;
-          _this.offsetTranscript = 0;
+          _this.transcriptStates.current.offset = _this.transcriptStates.active.offset;
           _this.homeBackgroundImage = "var(--img-background--blurred)";
           _this.beginDetect();
           let counter = 0;
@@ -227,8 +251,14 @@ button {
   background-color: hsla(0,100%,100%,0.8);
 }
 
-.transcripts {
+.bottom {
+  position: absolute;
+  width: 100%;
   bottom: 80px;
+}
+
+.response--rich {
+  margin-bottom: 8px;
 }
 
 .transcripts >>> .v-squircle--slot {
@@ -236,6 +266,8 @@ button {
 }
 
 .responses {
+  position: absolute;
+  width: 100%;
   top: 80px;
 }
 
@@ -243,17 +275,13 @@ button {
   background-position-y: top;
 }
 
-.transcript-enter-active,
-.transcript-leave-active,
-.response-enter-active,
-.response-leave-active {
+.dissolve-enter-active,
+.dissolve-leave-active {
   transition: opacity .4s linear;
 }
 
-.transcript-enter,
-.transcript-leave-to,
-.response-enter,
-.response-leave-to {
+.dissolve-enter,
+.dissolve-leave-to {
   opacity: 0;
 }
 </style>
