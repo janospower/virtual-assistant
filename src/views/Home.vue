@@ -19,22 +19,22 @@
       </v-squircle>
     </Motion>
 
-    <div class="bottom">
+    <div
+     class="bottom"
+     data-cursor-hover >
       <transition name="dissolve" appear>
         <v-squircle
          class="response--rich"
          radius="20px"
          padding="13px"
-         v-if="richResponse"
-         data-cursor-hover >
+         v-if="richResponse" >
          <compass></compass>
         </v-squircle>
       </transition>
       <Motion
        :values="transcriptCurrentState"
        tag="div"
-       spring="gentle"
-       data-cursor-hover >
+       spring="gentle" >
         <v-squircle
          class="transcripts"
          radius="20px"
@@ -57,7 +57,10 @@
   import sunInfo from '@/mixins/sunInfo.js'
   import micMeter from '@/mixins/micMeter.js'
   export default {
-    mixins: [sunInfo,micMeter],
+    mixins: [
+      sunInfo,
+      micMeter
+    ],
     components: {
       SpeechToText,
       Waves,
@@ -100,7 +103,7 @@
           formant: "-2d"
         },
         richResponse: false,
-        responseText: "Hellos",
+        responseText: "",
         responseAudioURL: "",
         responseAudio: null,
         homeBackgroundImage: "var(--img-background)",
@@ -114,7 +117,9 @@
             this.responseText = "The sun will set right over there at " + this.sunsetStr + ".";
             this.responseAudioURL = require(`@/assets/audio/the-sun-will-set-right-over-there-at-2-past-4-in-the-afternoon--olivia--vocaltrf-${this.vocalTrf.pitch}-${this.vocalTrf.formant}.mp3`);
             this.responseCurrentState = this.responseStates.active;
-            this.transcriptCurrentState = this.transcriptStates.hidden;
+
+            setTimeout(() => this.transcriptCurrentState = this.transcriptStates.hidden, 2000);
+
             this.richResponse = true;
             break;
           case "moon":

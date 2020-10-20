@@ -80,12 +80,57 @@ iframe {
   left: 28px;
 }
 
-aside {
+aside.buttons {
   position: absolute;
   top: calc( 50vh + 431px - 60px );
   right: calc( 50vw + 216px + 80px );
   width: 60px;
   height: 60px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.info {
+  position: absolute;
+  top: calc( 50vh - 431px + 80px );
+  right: calc( 50vw + 216px + 80px );
+  width: 350px;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 13px;
+  font-family: system-ui, 'system', '-apple-system','HelveticaNeue', sans-serif;
+  text-transform: uppercase;
+  line-height: 1.3em;
+  color: var(--color-gray-3-night);
+  letter-spacing: 0.1em;
+  padding: 13px;
+  margin: -13px;
+  border-radius: 13px;
+  transition: background-color .2s ease;
+  cursor: pointer;
+}
+
+.info:hover {
+  background-color: var(--color-gray-6-day);
+}
+
+.attribute {
+  text-align: right;
+  color: var(--color-gray-1-night);
+}
+
+.night-mode aside.info {
+  color: var(--color-gray-1-night);
+}
+
+.night-mode .attribute {
+  color: var(--color-gray-3-night);
+}
+
+.night-mode aside.info:hover {
+  background-color: var(--color-gray-6-night);
 }
 
 button {
