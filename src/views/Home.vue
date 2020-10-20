@@ -27,7 +27,7 @@
          class="response--rich"
          radius="20px"
          padding="13px"
-         v-if="richResponse" >
+         v-if="richResponse && wake" >
          <compass v-if="richResponseType == 'compass'"></compass>
          <div v-if="richResponseType == 'voice'">Voice settings</div>
         </v-squircle>
@@ -43,15 +43,19 @@
          padding="12px"
          slot-scope="_transcriptCurrentState"
          :style="{ marginBottom: `${_transcriptCurrentState.offset}px`, opacity: _transcriptCurrentState.opacity }" >
-          <speech-to-text @recognized-key-word="heardKeyWord($event)"></speech-to-text>
+          <speech-to-text v-if="wake && listening" @recognized-key-word="heardKeyWord($event)"></speech-to-text>
         </v-squircle>
       </Motion>
     </div>
 
-
-    <div class="iphone--home-indicator"><div></div></div>
-
     <waves :wave-height="waves" v-if="wake"></waves>
+
+    <div
+     data-cursor-hover
+     class="iphone--home-indicator" >
+      <div @click="wake = false"></div>
+    </div>
+
   </div>
 </template>
 
@@ -74,6 +78,7 @@
     data() {
       return {
         wake: false,
+        listening: false,
         waves: [0,0,0,0,0],
         transcriptStates: {
           hidden: {
@@ -118,7 +123,10 @@
     },
     methods: {
       heardKeyWord (keyword) {
-        setTimeout(() => this.transcriptCurrentState = this.transcriptStates.hidden, 1000);
+        setTimeout(() => {
+          this.transcriptCurrentState = this.transcriptStates.hidden;
+          this.listening = false;
+        }, 1500);
 
         switch (keyword) {
           case "sun" || "sunset":
@@ -139,6 +147,16 @@
         this.responseAudio.play();
       },
     },
+    watch: {
+      wake: function (wake) {
+         if (!wake) {
+           this.transcriptCurrentState = this.transcriptStates.hidden;
+           this.responseCurrentState = this.responseStates.hidden;
+           this.responseText = "";
+           this.homeBackgroundImage = "var(--img-background)";
+         }
+      }
+    },
     created: function () {
 
       this.getSunInfo(52.5,13.4);
@@ -147,6 +165,7 @@
       window.addEventListener('message', function(event) {
         if (event.data == "wake") {
           _this.wake = true;
+          _this.listening = true;
           _this.transcriptCurrentState = _this.transcriptStates.active;
           _this.homeBackgroundImage = "var(--img-background--blurred)";
           _this.beginDetect();

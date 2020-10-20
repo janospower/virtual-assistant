@@ -184,17 +184,18 @@ a:active {
 }
 
 .iphone--home-indicator {
-  height: 5px;
+  height: 40px;
   width: 100%;
   position: absolute;
-  bottom: 8px;
+  bottom: 0px;
   left: 0px;
 }
 
 .iphone--home-indicator div {
   margin: 0 auto;
   width: 134px;
-  height: 100%;
+  height: 5px;
+  margin-top: calc( 40px - 8px - 5px );
   border-radius: 3px;
   background-color: var(--color-primary);
 }
