@@ -1,9 +1,11 @@
 <template>
   <p class="mb-0">
     <span v-if="sentences.length > 0" >
-      <span v-for="sentence in sentences" v-bind:key="sentence" class="sentence">{{sentence}}?</span>
+      <span v-for="sentence in sentences" v-bind:key="sentence" class="sentence sentence-final">{{sentence}}?</span>
     </span>
-    <span class="sentence">{{runtimeTranscription}}</span>
+    <span class="sentence sentence-preliminary">
+      {{runtimeTranscriptionOld}}<em>{{lastWord}}</em>
+    </span>
   </p>
 </template>
 
@@ -26,8 +28,15 @@
         speaking: false,
         toggle: false,
         runtimeTranscription: '',
+        runtimeTranscriptionOld: '',
+        lastWord: '',
         sentences: [],
-        keyWords: ["sun","sunset","moon"]
+        keyWords: [
+          "sun",
+          "sunset",
+          "voice",
+          "sound"
+        ]
       }
     },
     created: function () {
@@ -73,8 +82,10 @@
         })
 
         recognition.addEventListener('result', event => {
-          const text = Array.from(event.results).map(result => result[0]).map(result => result.transcript).join('')
-          this.runtimeTranscription = text;
+          const text = Array.from(event.results).map(result => result[0]).map(result => result.transcript)
+          this.runtimeTranscription = text.join('');
+          this.runtimeTranscriptionOld = text[0];
+          this.lastWord = text[1];
         })
 
         recognition.addEventListener('end', () => {
@@ -89,6 +100,8 @@
             }
           }
           this.runtimeTranscription = ''
+          this.runtimeTranscriptionOld = ''
+          this.lastWord = ''
           recognition.stop()
           if (this.toggle) {
             // keep it going.
@@ -113,7 +126,13 @@
 .sentence {
   display: block;
 }
+
 .sentence:first-letter {
   text-transform: uppercase;
+}
+
+em {
+  font-style: normal;
+  color: hsla(0, 0%, 0%, 0.2);
 }
 </style>

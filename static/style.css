@@ -90,17 +90,16 @@ aside.buttons {
 
 a {
   text-decoration: none;
+  color: unset;
 }
 
 .info {
   position: absolute;
   top: calc( 50vh - 431px + 80px );
   right: calc( 50vw + 216px + 80px );
-  width: 350px;
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-gap: 13px;
+  width: 300px;
   font-family: system-ui, 'system', '-apple-system','HelveticaNeue', sans-serif;
+  font-size: 12px;
   text-transform: uppercase;
   line-height: 1.3em;
   color: var(--color-gray-3-night);
@@ -109,7 +108,28 @@ a {
   margin: -13px;
   border-radius: 13px;
   transition: background-color .2s ease;
-  cursor: pointer;
+}
+
+.info button {
+  position: absolute;
+  top: 13px;
+  left: 13px;
+  border-radius: 50%;
+  width: 13px;
+  height: 13px;
+  background-color: var(--color-gray-6-day);
+  color: var(--color-gray-1-night);
+}
+
+.info button span {
+  margin-top: -3px;
+  display: block;
+}
+
+.info div {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 13px;
 }
 
 .info:hover {

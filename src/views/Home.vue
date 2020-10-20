@@ -46,6 +46,9 @@
       </Motion>
     </div>
 
+
+    <div class="iphone--home-indicator"><div></div></div>
+
     <waves :wave-height="waves" v-if="wake"></waves>
   </div>
 </template>
@@ -122,7 +125,7 @@
 
             this.richResponse = true;
             break;
-          case "moon":
+          case "voice" || "sound":
             console.log("Mond");
         }
         this.responseAudio = new Audio(this.responseAudioURL);
