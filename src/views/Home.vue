@@ -28,9 +28,11 @@
          radius="20px"
          padding="13px"
          v-if="richResponse" >
-         <compass></compass>
+         <compass v-if="richResponseType == 'compass'"></compass>
+         <div v-if="richResponseType == 'voice'">Voice settings</div>
         </v-squircle>
       </transition>
+
       <Motion
        :values="transcriptCurrentState"
        tag="div"
@@ -106,6 +108,7 @@
           formant: "-2d"
         },
         richResponse: false,
+        richResponseType: "",
         responseText: "",
         responseAudioURL: "",
         responseAudio: null,
@@ -115,19 +118,23 @@
     },
     methods: {
       heardKeyWord (keyword) {
+        setTimeout(() => this.transcriptCurrentState = this.transcriptStates.hidden, 1000);
+
         switch (keyword) {
           case "sun" || "sunset":
+            this.richResponseType = "compass";
             this.responseText = "The sun will set right over there at " + this.sunsetStr + ".";
-            this.responseAudioURL = require(`@/assets/audio/the-sun-will-set-right-over-there-at-2-past-4-in-the-afternoon--olivia--vocaltrf-${this.vocalTrf.pitch}-${this.vocalTrf.formant}.mp3`);
-            this.responseCurrentState = this.responseStates.active;
 
-            setTimeout(() => this.transcriptCurrentState = this.transcriptStates.hidden, 2000);
-
-            this.richResponse = true;
+            this.responseAudioURL = require(`@/assets/audio/sun--olivia--vocaltrf-${this.vocalTrf.pitch}-${this.vocalTrf.formant}.mp3`);
             break;
           case "voice" || "sound":
-            console.log("Mond");
+            this.richResponseType = "voice";
+            this.responseText = "Gender is a construct, have a look at these voice settings:";
+            this.responseAudioURL = require(`@/assets/audio/sun--olivia--vocaltrf-${this.vocalTrf.pitch}-${this.vocalTrf.formant}.mp3`);
+            break;
         }
+        this.responseCurrentState = this.responseStates.active;
+        this.richResponse = true;
         this.responseAudio = new Audio(this.responseAudioURL);
         this.responseAudio.play();
       },
@@ -143,19 +150,7 @@
           _this.transcriptCurrentState = _this.transcriptStates.active;
           _this.homeBackgroundImage = "var(--img-background--blurred)";
           _this.beginDetect();
-          let counter = 0;
-          _this.waveMover = setInterval(function(){
-            if (Math.random() > 0.9) {
-              _this.waves.splice(counter, 1, 0.1); // Math.random()*1.5
-            }
-            else {
-              _this.waves.splice(counter, 1, _this.vol || 0); // Math.random()*1.5
-            }
-            counter += 1;
-            if (counter > _this.waves.length - 1) {
-              counter = 0;
-            }
-          }, 30);
+          _this.moveWaves(_this);
         }
         else if (event.data == "sleep") {
           clearInterval(_this.waveMover);
