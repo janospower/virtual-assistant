@@ -3,7 +3,7 @@
    class="home"
    :style="{ backgroundImage: homeBackgroundImage }"
   >
-    <button type="button" @click="heardKeyWord('sun')" name="button">sun</button>
+    <!-- <button type="button" @click="heardKeyWord('sun')" name="button">sun</button> -->
     <Motion
      :values="responseCurrentState"
      tag="div"
@@ -131,7 +131,7 @@
         let times = this.SunCalc.getTimes(new Date(), long, lat);
 
         // format sunset time from the Date object
-        this.sunsetStr = times.sunset.getHours() + ':' + times.sunset.getMinutes();
+        this.sunsetStr = times.sunset.getHours() + ':' + ((times.sunset.getMinutes()<10?'0':'') + times.sunset.getMinutes());
 
         // get position of the sun (azimuth and altitude) at today's sunset
         let sunsetPos = this.SunCalc.getPosition(times.sunset, long, lat);
