@@ -40,7 +40,7 @@
          radius="20px"
          padding="12px"
          slot-scope="_transcriptCurrentState"
-         :style="{ transform: `translateY(${_transcriptCurrentState.offset}px)`, opacity: _transcriptCurrentState.opacity }" >
+         :style="{ marginBottom: `${_transcriptCurrentState.offset}px`, opacity: _transcriptCurrentState.opacity }" >
           <speech-to-text @recognized-key-word="heardKeyWord($event)"></speech-to-text>
         </v-squircle>
       </Motion>
@@ -54,7 +54,10 @@
   import SpeechToText from '@/components/speech-to-text.vue'
   import Waves from '@/components/waves.vue'
   import Compass from '@/components/compass.vue'
-  export default{
+  import sunInfo from '@/mixins/sunInfo.js'
+  import micMeter from '@/mixins/micMeter.js'
+  export default {
+    mixins: [sunInfo,micMeter],
     components: {
       SpeechToText,
       Waves,
@@ -66,7 +69,7 @@
         waves: [0,0,0,0,0],
         transcriptStates: {
           hidden: {
-            offset: 70,
+            offset: -70,
             opacity: 0
           },
           active: {
@@ -75,7 +78,7 @@
           }
         },
         transcriptCurrentState: {
-            offset: 70,
+            offset: -70,
             opacity: 0
         },
         responseStates: {
@@ -101,14 +104,7 @@
         responseAudioURL: "",
         responseAudio: null,
         homeBackgroundImage: "var(--img-background)",
-        audioContext: null,
-        mediaStreamSource: null,
-        meter: null,
-        vol: 0,
         waveMover: null,
-        SunCalc: null,
-        sunsetStr: "",
-        sunsetAzimuth: "",
       }
     },
     methods: {
@@ -116,7 +112,7 @@
         switch (keyword) {
           case "sun" || "sunset":
             this.responseText = "The sun will set right over there at " + this.sunsetStr + ".";
-            this.responseAudioURL = require("@/assets/audio/the-sun-will-set-right-over-there-at-2-past-4-in-the-afternoon--olivia--vocaltrf-" + this.vocalTrf.pitch + "-" + this.vocalTrf.formant + ".mp3");
+            this.responseAudioURL = require(`@/assets/audio/the-sun-will-set-right-over-there-at-2-past-4-in-the-afternoon--olivia--vocaltrf-${this.vocalTrf.pitch}-${this.vocalTrf.formant}.mp3`);
             this.responseCurrentState = this.responseStates.active;
             this.transcriptCurrentState = this.transcriptStates.hidden;
             this.richResponse = true;
@@ -126,84 +122,6 @@
         }
         this.responseAudio = new Audio(this.responseAudioURL);
         this.responseAudio.play();
-      },
-      getSunInfo (long, lat) {
-        this.SunCalc = require('suncalc');
-        // get today's sunlight times for London
-        let times = this.SunCalc.getTimes(new Date(), long, lat);
-
-        // format sunset time from the Date object
-        this.sunsetStr = times.sunset.getHours() + ':' + ((times.sunset.getMinutes()<10?'0':'') + times.sunset.getMinutes());
-
-        // get position of the sun (azimuth and altitude) at today's sunset
-        let sunsetPos = this.SunCalc.getPosition(times.sunset, long, lat);
-
-        // get sunset azimuth in degrees
-        let direction = Math.round((sunsetPos.azimuth * 180 / Math.PI)+180);
-        this.sunsetAzimuth = direction + "º " + this.getCardinal(direction);
-      },
-      getCardinal(angle) {
-        const degreePerDirection = 360 / 8;
-        const offsetAngle = angle + degreePerDirection / 2;
-        return (offsetAngle >= 0 * degreePerDirection && offsetAngle < 1 * degreePerDirection) ? "N"
-          : (offsetAngle >= 1 * degreePerDirection && offsetAngle < 2 * degreePerDirection) ? "NE"
-            : (offsetAngle >= 2 * degreePerDirection && offsetAngle < 3 * degreePerDirection) ? "E"
-              : (offsetAngle >= 3 * degreePerDirection && offsetAngle < 4 * degreePerDirection) ? "SE"
-                : (offsetAngle >= 4 * degreePerDirection && offsetAngle < 5 * degreePerDirection) ? "S"
-                  : (offsetAngle >= 5 * degreePerDirection && offsetAngle < 6 * degreePerDirection) ? "SW"
-                    : (offsetAngle >= 6 * degreePerDirection && offsetAngle < 7 * degreePerDirection) ? "W"
-                      : "NW";
-      },
-      createAudioMeter(audioContext, clipLevel, averaging, clipLag) {
-        const processor = audioContext.createScriptProcessor(512)
-        processor.onaudioprocess = this.volumeAudioProcess
-        processor.volume = 0
-        processor.averaging = averaging || 0.95
-        processor.clipLag = clipLag || 750
-
-        // this will have no effect, since we don't copy the input to the output,
-        // but works around a current Chrome bug.
-        processor.connect(audioContext.destination)
-
-        processor.shutdown = function () {
-          this.disconnect()
-          this.onaudioprocess = null
-        }
-
-        return processor
-      },
-      beginDetect() {
-        this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-          navigator.mediaDevices.getUserMedia({audio: true}).then((stream) => {
-            this.mediaStreamSource = this.audioContext.createMediaStreamSource(stream)
-            this.meter = this.createAudioMeter(this.audioContext)
-            this.mediaStreamSource.connect(this.meter)
-          })
-        }
-      },
-      volumeAudioProcess(event) {
-        const buf = event.inputBuffer.getChannelData(0)
-        const bufLength = buf.length
-        let sum = 0
-        let x
-        let _this = event.currentTarget;
-
-        // Do a root-mean-square on the samples: sum up the squares...
-        for (var i = 0; i < bufLength; i++) {
-          x = buf[i]
-          sum += x * x
-        }
-
-        // ... then take the square root of the sum.
-        const rms = Math.sqrt(sum / bufLength)
-
-        // Now smooth this out with the averaging factor applied
-        // to the previous sample - take the max here because we
-        // want "fast attack, slow release."
-        _this.volume = Math.max(rms, _this.volume * _this.averaging)
-
-        this.vol = Math.max(0,Math.log10(_this.volume * 1000 - 2)/2);
       },
     },
     created: function () {
