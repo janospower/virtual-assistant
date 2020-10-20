@@ -92,8 +92,10 @@
             offset: -70,
             opacity: 0
         },
-        offsetResponseHidden: -70,
-        offsetResponse: -70,
+        vocalTrf: {
+          pitch: "-2d",
+          formant: "-2d"
+        },
         richResponse: false,
         responseText: "Hellos",
         responseAudioURL: "",
@@ -114,7 +116,7 @@
         switch (keyword) {
           case "sun" || "sunset":
             this.responseText = "The sun will set right over there at " + this.sunsetStr + ".";
-            this.responseAudioURL = require("@/assets/audio/the-sun-will-set-right-over-there-at-2-past-4-in-the-afternoon--olivia--vocaltrf--2d--2d.mp3");
+            this.responseAudioURL = require("@/assets/audio/the-sun-will-set-right-over-there-at-2-past-4-in-the-afternoon--olivia--vocaltrf-" + this.vocalTrf.pitch + "-" + this.vocalTrf.formant + ".mp3");
             this.responseCurrentState = this.responseStates.active;
             this.transcriptCurrentState = this.transcriptStates.hidden;
             this.richResponse = true;
