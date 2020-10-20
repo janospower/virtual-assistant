@@ -4,23 +4,20 @@
    :style="{ backgroundImage: homeBackgroundImage }"
   >
     <button type="button" @click="heardKeyWord('sun')" name="button">sun</button>
-    <transition name="dissolve" appear>
-      <Motion
-       :value="offsetResponse"
-       tag="div"
-       spring="gentle"
-       data-cursor-hover >
-        <v-squircle
-         class="responses"
-         radius="20px"
-         padding="12px"
-         v-if="offsetResponse != -70"
-         slot-scope="props"
-         :style="{ transform: `translateY(${props.value}px)` }" >
-          {{responseText}}
-        </v-squircle>
-      </Motion>
-    </transition>
+    <Motion
+     :values="responseCurrentState"
+     tag="div"
+     spring="gentle"
+     data-cursor-hover >
+      <v-squircle
+       class="responses"
+       radius="20px"
+       padding="12px"
+       slot-scope="_responseCurrentState"
+       :style="{ transform: `translateY(${_responseCurrentState.offset}px)`, opacity: _responseCurrentState.opacity }" >
+        {{responseText}}
+      </v-squircle>
+    </Motion>
 
     <div class="bottom">
       <transition name="dissolve" appear>
@@ -33,23 +30,20 @@
          <compass></compass>
         </v-squircle>
       </transition>
-      <transition name="dissolve" appear>
-        <Motion
-         :value="transcriptStates.current.offset"
-         tag="div"
-         spring="gentle"
-         data-cursor-hover >
-          <v-squircle
-           class="transcripts"
-           radius="20px"
-           padding="12px"
-           v-if="true"
-           slot-scope="props"
-           :style="{ transform: `translateY(${props.value}px)` }" >
-            <speech-to-text @recognized-key-word="heardKeyWord($event)"></speech-to-text>
-          </v-squircle>
-        </Motion>
-      </transition>
+      <Motion
+       :values="transcriptCurrentState"
+       tag="div"
+       spring="gentle"
+       data-cursor-hover >
+        <v-squircle
+         class="transcripts"
+         radius="20px"
+         padding="12px"
+         slot-scope="_transcriptCurrentState"
+         :style="{ transform: `translateY(${_transcriptCurrentState.offset}px)`, opacity: _transcriptCurrentState.opacity }" >
+          <speech-to-text @recognized-key-word="heardKeyWord($event)"></speech-to-text>
+        </v-squircle>
+      </Motion>
     </div>
 
     <waves :wave-height="waves" v-if="wake"></waves>
@@ -78,11 +72,25 @@
           active: {
             offset: 0,
             opacity: 1
-          },
-          current: {
+          }
+        },
+        transcriptCurrentState: {
             offset: 70,
             opacity: 0
+        },
+        responseStates: {
+          hidden: {
+            offset: -70,
+            opacity: 0
+          },
+          active: {
+            offset: 0,
+            opacity: 1
           }
+        },
+        responseCurrentState: {
+            offset: -70,
+            opacity: 0
         },
         offsetResponseHidden: -70,
         offsetResponse: -70,
@@ -107,8 +115,8 @@
           case "sun" || "sunset":
             this.responseText = "The sun will set right over there at " + this.sunsetStr + ".";
             this.responseAudioURL = require("@/assets/audio/the-sun-will-set-right-over-there-at-2-past-4-in-the-afternoon--olivia--vocaltrf--2d--2d.mp3");
-            this.offsetResponse = 0;
-            this.transcriptStates.current.offset = this.transcriptStates.hidden.offset;
+            this.responseCurrentState = this.responseStates.active;
+            this.transcriptCurrentState = this.transcriptStates.hidden;
             this.richResponse = true;
             break;
           case "moon":
@@ -204,7 +212,7 @@
       window.addEventListener('message', function(event) {
         if (event.data == "wake") {
           _this.wake = true;
-          _this.transcriptStates.current.offset = _this.transcriptStates.active.offset;
+          _this.transcriptCurrentState = _this.transcriptStates.active;
           _this.homeBackgroundImage = "var(--img-background--blurred)";
           _this.beginDetect();
           let counter = 0;
