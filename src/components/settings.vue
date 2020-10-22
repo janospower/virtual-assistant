@@ -50,18 +50,18 @@ export default {
   data() {
     return {
       vocalTrf: {
-        pitch: "0d",
-        formant: "0d"
+        pitch: 0,
+        formant: 0
       },
     }
   },
   methods: {
     setFormant(x) {
-      this.vocalTrf.formant = x + "d";
+      this.vocalTrf.formant = x;
       this.$emit('vocal-trf-changed', this.vocalTrf);
     },
     setPitch(x) {
-      this.vocalTrf.pitch = x + "d";
+      this.vocalTrf.pitch = x;
       this.$emit('vocal-trf-changed', this.vocalTrf);
     }
   },

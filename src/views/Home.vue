@@ -109,8 +109,8 @@
             opacity: 0
         },
         vocalTrf: {
-          pitch: "-2d",
-          formant: "-2d"
+          pitch: -2,
+          formant: -2
         },
         richResponse: false,
         richResponseType: "",
@@ -120,25 +120,37 @@
         homeBackgroundImage: "var(--img-background)",
         waveMover: null,
         time: 0,
-        settingsAudioOld: null,
-        settingsAudio: null,
+        settingsAudios: [],
+        lastSettingsAudio: null,
       }
     },
     methods: {
       setVocalTrf(trf) {
-        if (this.settingsAudio) {
-          this.settingsAudioOld = this.settingsAudio;
-          this.time = this.settingsAudioOld.currentTime;
-          this.settingsAudioOld.pause();
+        this.time = this.settingsAudios[trf.pitch+4][trf.formant+4].currentTime;
+        if (this.time == 0 || this.settingsAudios[trf.pitch+4][trf.formant+4].currentTime > 24) {
+          for (var i = 0; i < 9; i++) {
+            for (var j = 0; j < 9; j++) {
+              this.time = 0;
+              this.settingsAudios[i][j].currentTime = 0;
+              this.settingsAudios[i][j].play();
+              this.settingsAudios[i][j].volume = 0;
+            }
+          }
         }
+        this.settingsAudios[trf.pitch+4][trf.formant+4].volume = 1;
+        if (this.lastSettingsAudio) {
+          this.lastSettingsAudio.volume = 0;
+        }
+        this.lastSettingsAudio = this.settingsAudios[trf.pitch+4][trf.formant+4];
+
         this.vocalTrf = trf;
-        let settingsURL = require(`@/assets/audio/voice-settings/voice-settings-${this.vocalTrf.pitch}-${this.vocalTrf.formant}.mp3`);
-        this.settingsAudio = new Audio(settingsURL);
-        this.settingsAudio.currentTime = this.time;
-        if (this.settingsAudio.currentTime > 24) {
-          this.settingsAudio.currentTime = 0;
-        }
-        this.settingsAudio.play();
+
+
+        // this.settingsAudio.currentTime = this.time;
+        // if (this.settingsAudio.currentTime > 24) {
+        //   this.settingsAudio.currentTime = 0;
+        // }
+        // this.settingsAudio.play();
       },
       heardKeyWord (keyword) {
         setTimeout(() => {
@@ -153,14 +165,14 @@
             }, 300);
             this.responseText = "The sun will set right over there at " + this.sunsetStr + ".";
 
-            this.responseAudioURL = require(`@/assets/audio/sun--olivia--vocaltrf-${this.vocalTrf.pitch}-${this.vocalTrf.formant}.mp3`);
+            this.responseAudioURL = require(`@/assets/audio/sun--olivia--vocaltrf-${this.vocalTrf.pitch}d-${this.vocalTrf.formant}d.mp3`);
             break;
           case "voice" || "sound" || "Voice":
             setTimeout(() => {
               this.richResponseType = "voice";
             }, 300);
             this.responseText = "Gender is a construct, have a look at these voice settings:";
-            this.responseAudioURL = require(`@/assets/audio/gender/gender-${this.vocalTrf.pitch}-${this.vocalTrf.formant}.mp3`);
+            this.responseAudioURL = require(`@/assets/audio/gender/gender-${this.vocalTrf.pitch}d-${this.vocalTrf.formant}d.mp3`);
             break;
         }
         this.responseCurrentState = this.elementStates.active;
@@ -180,6 +192,13 @@
       }
     },
     created: function () {
+      for (var i = 0; i < 9; i++) {
+        this.settingsAudios[i] = [];
+        for (var j = 0; j < 9; j++) {
+          let settingsURL = require(`@/assets/audio/voice-settings/voice-settings-${i-4}d-${j-4}d.mp3`)
+          this.settingsAudios[i][j] = new Audio(settingsURL);
+        }
+      }
 
       this.getSunInfo(52.5,13.4);
 
