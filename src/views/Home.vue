@@ -119,21 +119,26 @@
         responseAudio: null,
         homeBackgroundImage: "var(--img-background)",
         waveMover: null,
-        time: 0
+        time: 0,
+        settingsAudioOld: null,
+        settingsAudio: null,
       }
     },
     methods: {
       setVocalTrf(trf) {
-        this.vocalTrf = trf;
-        this.responseAudioURL = require(`@/assets/audio/voice-settings/voice-settings-${this.vocalTrf.pitch}-${this.vocalTrf.formant}.mp3`);
-        this.time = this.responseAudio.currentTime;
-        this.responseAudio.pause();
-        this.responseAudio = new Audio(this.responseAudioURL);
-        this.responseAudio.currentTime = this.time;
-        if (this.responseAudio.currentTime > 24) {
-          this.responseAudio.currentTime = 0;
+        if (this.settingsAudio) {
+          this.settingsAudioOld = this.settingsAudio;
+          this.time = this.settingsAudioOld.currentTime;
+          this.settingsAudioOld.pause();
         }
-        this.responseAudio.play();
+        this.vocalTrf = trf;
+        let settingsURL = require(`@/assets/audio/voice-settings/voice-settings-${this.vocalTrf.pitch}-${this.vocalTrf.formant}.mp3`);
+        this.settingsAudio = new Audio(settingsURL);
+        this.settingsAudio.currentTime = this.time;
+        if (this.settingsAudio.currentTime > 24) {
+          this.settingsAudio.currentTime = 0;
+        }
+        this.settingsAudio.play();
       },
       heardKeyWord (keyword) {
         setTimeout(() => {
@@ -155,7 +160,7 @@
               this.richResponseType = "voice";
             }, 300);
             this.responseText = "Gender is a construct, have a look at these voice settings:";
-            this.responseAudioURL = require(`@/assets/audio/sun--olivia--vocaltrf-${this.vocalTrf.pitch}-${this.vocalTrf.formant}.mp3`);
+            this.responseAudioURL = require(`@/assets/audio/gender/gender-${this.vocalTrf.pitch}-${this.vocalTrf.formant}.mp3`);
             break;
         }
         this.responseCurrentState = this.elementStates.active;
