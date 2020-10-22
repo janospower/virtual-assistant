@@ -63,9 +63,10 @@ export default {
       }
     }
   },
-  methods: {
-  },
-  mounted() {
+  watch: {
+    value: function (value) {
+       this.$emit('value-changed', value);
+    }
   }
 }
 </script>

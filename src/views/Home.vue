@@ -28,7 +28,7 @@
          radius="20px"
          padding="13px"
          v-if="richResponseType == 'voice' && wake" >
-         <settings></settings>
+         <settings @vocal-trf-changed="setVocalTrf($event)"></settings>
         </v-squircle>
       </transition>
        <transition name="dissolve" appear>
@@ -122,6 +122,9 @@
       }
     },
     methods: {
+      setVocalTrf(trf) {
+        this.vocalTrf = trf;
+      },
       heardKeyWord (keyword) {
         setTimeout(() => {
           this.transcriptCurrentState = this.elementStates.hidden;

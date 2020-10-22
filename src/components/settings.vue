@@ -19,13 +19,14 @@
       <slider
        slider-label-left="Low"
        slider-label-right="High"
-       :lastInBlock="true">
+       @value-changed="setPitch($event)">
       </slider>
       <slider
        slider-label-left="Dark"
        slider-label-right="Bright"
-       :lastInBlock="true">
-      </slider>
+       :lastInBlock="true"
+       @value-changed="setFormant($event)">
+      </slider >
     </div>
 
     <btn-primary>Open Settings …</btn-primary>
@@ -46,9 +47,21 @@ export default {
   },
   data() {
     return {
+      vocalTrf: {
+        pitch: "0d",
+        formant: "0d"
+      },
     }
   },
   methods: {
+    setFormant(x) {
+      this.vocalTrf.formant = x + "d";
+      this.$emit('vocal-trf-changed', this.vocalTrf);
+    },
+    setPitch(x) {
+      this.vocalTrf.pitch = x + "d";
+      this.$emit('vocal-trf-changed', this.vocalTrf);
+    }
   },
   mounted() {
   }
