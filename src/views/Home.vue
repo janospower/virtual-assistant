@@ -3,7 +3,7 @@
    class="home"
    :style="{ backgroundImage: homeBackgroundImage }"
   >
-    <button type="button" @click="heardKeyWord('voice')" name="button">sun</button>
+    <!-- <button type="button" @click="heardKeyWord('voice')" name="button">sun</button> -->
     <Motion
      :values="responseCurrentState"
      tag="div"
@@ -27,11 +27,19 @@
          class="response--rich"
          radius="20px"
          padding="13px"
-         v-if="richResponse && wake" >
-         <compass v-if="richResponseType == 'compass'"></compass>
-         <settings v-if="richResponseType == 'voice'"></settings>
+         v-if="richResponseType == 'voice' && wake" >
+         <settings></settings>
         </v-squircle>
       </transition>
+       <transition name="dissolve" appear>
+         <v-squircle
+          class="response--rich"
+          radius="20px"
+          padding="13px"
+          v-if="richResponseType == 'compass' && wake" >
+          <compass></compass>
+         </v-squircle>
+       </transition>
 
       <Motion
        :values="transcriptCurrentState"
@@ -82,7 +90,7 @@
         wake: false,
         listening: false,
         waves: [0,0,0,0,0],
-        transcriptStates: {
+        elementStates: {
           hidden: {
             offset: -70,
             opacity: 0
@@ -95,16 +103,6 @@
         transcriptCurrentState: {
             offset: -70,
             opacity: 0
-        },
-        responseStates: {
-          hidden: {
-            offset: -70,
-            opacity: 0
-          },
-          active: {
-            offset: 0,
-            opacity: 1
-          }
         },
         responseCurrentState: {
             offset: -70,
@@ -126,24 +124,28 @@
     methods: {
       heardKeyWord (keyword) {
         setTimeout(() => {
-          this.transcriptCurrentState = this.transcriptStates.hidden;
+          this.transcriptCurrentState = this.elementStates.hidden;
           this.listening = false;
         }, 1500);
 
         switch (keyword) {
           case "sun" || "sunset":
-            this.richResponseType = "compass";
+            setTimeout(() => {
+              this.richResponseType = "compass";
+            }, 300);
             this.responseText = "The sun will set right over there at " + this.sunsetStr + ".";
 
             this.responseAudioURL = require(`@/assets/audio/sun--olivia--vocaltrf-${this.vocalTrf.pitch}-${this.vocalTrf.formant}.mp3`);
             break;
           case "voice" || "sound":
-            this.richResponseType = "voice";
+            setTimeout(() => {
+              this.richResponseType = "voice";
+            }, 300);
             this.responseText = "Gender is a construct, have a look at these voice settings:";
             this.responseAudioURL = require(`@/assets/audio/sun--olivia--vocaltrf-${this.vocalTrf.pitch}-${this.vocalTrf.formant}.mp3`);
             break;
         }
-        this.responseCurrentState = this.responseStates.active;
+        this.responseCurrentState = this.elementStates.active;
         this.richResponse = true;
         this.responseAudio = new Audio(this.responseAudioURL);
         this.responseAudio.play();
@@ -152,8 +154,8 @@
     watch: {
       wake: function (wake) {
          if (!wake) {
-           this.transcriptCurrentState = this.transcriptStates.hidden;
-           this.responseCurrentState = this.responseStates.hidden;
+           this.transcriptCurrentState = this.elementStates.hidden;
+           this.responseCurrentState = this.elementStates.hidden;
            this.responseText = "";
            this.homeBackgroundImage = "var(--img-background)";
          }
@@ -166,9 +168,12 @@
       let _this = this;
       window.addEventListener('message', function(event) {
         if (event.data == "wake") {
+          _this.wake = false;
+          _this.richResponseType = "";
+          _this.richResponse = false;
           _this.wake = true;
           _this.listening = true;
-          _this.transcriptCurrentState = _this.transcriptStates.active;
+          _this.transcriptCurrentState = _this.elementStates.active;
           _this.homeBackgroundImage = "var(--img-background--blurred)";
           _this.beginDetect();
           _this.moveWaves(_this);

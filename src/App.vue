@@ -277,13 +277,28 @@ caption {
   letter-spacing: 0.08em;
   display: inline-block;
   text-align: left;
+  margin-bottom: 6px;
 }
 
 hr {
   height: 1px;
   border-width: 0;
-  background-image: var(--img-background--text);
-  background-position-x: center;
-  background-position-y: bottom;
+  background-color: hsla(222, 100%, 90%, 0.13);
+}
+
+
+.list-item {
+  font-weight: var(--font-weight--regular);
+  line-height: 41px;
+  background-color: hsla(222, 100%, 90%, 0.05);
+  margin-left: -13px;
+  margin-right: -13px;
+  padding-left: 13px;
+  padding-right: 13px;
+}
+
+.list-item-content {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

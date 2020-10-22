@@ -77,26 +77,24 @@ export default {
   margin-top: 0;
 }
 
+.vue-slider {
+  margin-bottom: 6px;
+}
+
 .vue-slider-process {
   background-color: var(--color-blue)!important;
 }
 
 .vue-slider-rail {
-  background-color: var(--color-gray-5)!important;
+  background-color: hsla(222, 100%, 90%, 0.13)!important;
 }
 
 .vue-slider-dot-handle {
   box-shadow: 0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12) !important;
 }
 
-.list-item {
-  font-weight: var(--font-weight--regular);
-  line-height: 41px;
-}
-
-.list-item-content {
-  display: flex;
-  justify-content: space-between;
+.vue-slider-dot-handle, .vue-slider-dot {
+  cursor: none!important;
 }
 
 </style>

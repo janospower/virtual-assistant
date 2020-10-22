@@ -6,32 +6,35 @@
      property-name="Language"
      setting-name="English (United States)">
     </list-item>
-    <toggle-item></toggle-item>
     <list-item
-     property-name="Language"
-     setting-name="English (United States)"
-     lastInBlock="true">
+     property-name="Voice"
+     setting-name="Ezra (Neutral)"
+     :lastInBlock="true">
     </list-item>
 
 
     <div class="settings-block">
-      <caption>Voice Settings</caption>
+      <caption>Vocal Character</caption>
       <hr class="hr--full">
       <slider
        slider-label-left="Low"
        slider-label-right="High"
-       lastInBlock="true">
+       :lastInBlock="true">
+      </slider>
+      <slider
+       slider-label-left="Dark"
+       slider-label-right="Bright"
+       :lastInBlock="true">
       </slider>
     </div>
 
-    <btn-primary>Open Settings</btn-primary>
+    <btn-primary>Open Settings …</btn-primary>
 
   </div>
 </template>
 
 <script>
 import ListItem from '@/components/ListItem.vue'
-import ToggleItem from '@/components/ToggleItem.vue'
 import Slider from '@/components/Slider.vue'
 import BtnPrimary from '@/components/BtnPrimary.vue'
 export default {
@@ -39,7 +42,6 @@ export default {
   components: {
     ListItem,
     Slider,
-    ToggleItem,
     BtnPrimary
   },
   data() {
@@ -58,7 +60,6 @@ export default {
 .hr--full {
   margin-right: -13px;
   margin-left: -13px;
-  margin-top: 6px;
 }
 
 .settings-block {

@@ -36,16 +36,6 @@ export default {
   margin-top: 0;
 }
 
-.list-item {
-  font-weight: var(--font-weight--regular);
-  line-height: 41px;
-}
-
-.list-item-content {
-  display: flex;
-  justify-content: space-between;
-}
-
 .list-item-content div {
   display: inline;
   padding-left: 6px;
