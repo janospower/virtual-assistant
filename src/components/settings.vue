@@ -28,6 +28,8 @@
        @value-changed="setFormant($event)">
       </slider >
     </div>
+    <caption class="info">You can customize the sound of Siri’s voice by adjusting their pitch and formant. <span class="link">Learn more…</span></caption>
+    <hr class="hr--full">
 
     <btn-primary>Open Settings …</btn-primary>
 
@@ -77,6 +79,17 @@ export default {
 
 .settings-block {
   margin-top: 20px;
+}
+
+.info {
+  text-transform: none;
+  letter-spacing: 0;
+  margin-top: 6px;
+  margin-bottom: 13px;
+}
+
+.link {
+  color: var(--color-blue)
 }
 
 </style>

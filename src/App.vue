@@ -295,6 +295,7 @@ hr {
   margin-right: -13px;
   padding-left: 13px;
   padding-right: 13px;
+  color: hsla(0, 0%, 100%, 0.3);
 }
 
 .list-item-content {

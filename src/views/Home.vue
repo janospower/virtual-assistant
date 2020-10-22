@@ -92,7 +92,7 @@
         waves: [0,0,0,0,0],
         elementStates: {
           hidden: {
-            offset: -70,
+            offset: -50,
             opacity: 0
           },
           active: {
@@ -101,11 +101,11 @@
           }
         },
         transcriptCurrentState: {
-            offset: -70,
+            offset: -50,
             opacity: 0
         },
         responseCurrentState: {
-            offset: -70,
+            offset: -50,
             opacity: 0
         },
         vocalTrf: {
@@ -124,6 +124,9 @@
     methods: {
       setVocalTrf(trf) {
         this.vocalTrf = trf;
+        this.responseAudioURL = require(`@/assets/audio/sun--olivia--vocaltrf-${this.vocalTrf.pitch}-${this.vocalTrf.formant}.mp3`);
+        this.responseAudio = new Audio(this.responseAudioURL);
+        this.responseAudio.play();
       },
       heardKeyWord (keyword) {
         setTimeout(() => {
@@ -223,6 +226,10 @@ button {
 
 .transcripts >>> .v-squircle--slot {
   background-position-y: bottom;
+}
+
+.response--rich >>> .v-squircle--slot {
+  background-position-y: -300px;
 }
 
 .responses {
