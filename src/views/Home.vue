@@ -40,6 +40,15 @@
           <compass></compass>
          </v-squircle>
        </transition>
+      <transition name="dissolve" appear>
+        <v-squircle
+         class="response--rich"
+         radius="20px"
+         padding="13px"
+         v-if="richResponseType == 'measure' && wake" >
+         <measure></measure>
+        </v-squircle>
+      </transition>
 
       <Motion
        :values="transcriptCurrentState"
@@ -71,6 +80,7 @@
   import SpeechToText from '@/components/speech-to-text.vue'
   import Waves from '@/components/waves.vue'
   import Compass from '@/components/compass.vue'
+  import Measure from '@/components/Measure.vue'
   import Settings from '@/components/settings.vue'
   import sunInfo from '@/mixins/sunInfo.js'
   import micMeter from '@/mixins/micMeter.js'
@@ -83,7 +93,8 @@
       SpeechToText,
       Waves,
       Compass,
-      Settings
+      Settings,
+      Measure
     },
     data() {
       return {
@@ -109,8 +120,8 @@
             opacity: 0
         },
         vocalTrf: {
-          pitch: -2,
-          formant: -2
+          pitch: 0,
+          formant: 0
         },
         richResponse: false,
         richResponseType: "",
@@ -143,14 +154,12 @@
         }
         this.lastSettingsAudio = this.settingsAudios[trf.pitch+4][trf.formant+4];
 
-        this.vocalTrf = trf;
-
-
-        // this.settingsAudio.currentTime = this.time;
-        // if (this.settingsAudio.currentTime > 24) {
-        //   this.settingsAudio.currentTime = 0;
-        // }
-        // this.settingsAudio.play();
+        if (trf.pitch == 0 && trf.formant == 0) {
+          this.vocalTrf = trf;
+        }
+        else if (trf.pitch == -2 && trf.formant == -2) {
+          this.vocalTrf = trf;
+        }
       },
       heardKeyWord (keyword) {
         setTimeout(() => {
@@ -171,8 +180,15 @@
             setTimeout(() => {
               this.richResponseType = "voice";
             }, 300);
-            this.responseText = "Gender is a construct, have a look at these voice settings:";
+            this.responseText = "Gender is a construct, have a look at these settings:";
             this.responseAudioURL = require(`@/assets/audio/gender/gender-${this.vocalTrf.pitch}d-${this.vocalTrf.formant}d.mp3`);
+            break;
+          case "tall" || "Tall" || "buidling" || "Buidling":
+            setTimeout(() => {
+              this.richResponseType = "measure";
+            }, 300);
+            this.responseText = "You'll need to show me which one.";
+            this.responseAudioURL = require(`@/assets/audio/measure/measure-${this.vocalTrf.pitch}d-${this.vocalTrf.formant}d.mp3`);
             break;
         }
         this.responseCurrentState = this.elementStates.active;

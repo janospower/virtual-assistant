@@ -118,9 +118,6 @@ export default {
   props: {
     waveHeight: Array
   },
-  mounted() {
-    console.log(this.waveHeight);
-  }
 }
 </script>
 

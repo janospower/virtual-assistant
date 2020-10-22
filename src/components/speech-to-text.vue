@@ -38,7 +38,11 @@
           "Voice",
           "Sun",
           "Sunset",
-          "sound"
+          "sound",
+          "tall",
+          "Tall",
+          "building",
+          "Building"
         ]
       }
     },
