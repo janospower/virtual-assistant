@@ -5,7 +5,11 @@ import VSquircle from "vue-squircle";
 import CursorFx from '@luxdamore/vue-cursor-fx';
 import '@luxdamore/vue-cursor-fx/dist/CursorFx.css';
 import VueMotion from 'vue-motion';
-import SVGInjectorVue from 'svginjector-vue'
+import SVGInjectorVue from 'svginjector-vue';
+import VueSlider from 'vue-slider-component'
+import 'vue-slider-component/theme/default.css'
+
+Vue.component('VueSlider', VueSlider)
 
 Vue.use(SVGInjectorVue)
 

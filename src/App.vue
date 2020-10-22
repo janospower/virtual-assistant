@@ -75,6 +75,8 @@
     --spacing-11: 192px;
     --spacing-12: 256px;
 
+    --font-weight--regular: 400;
+
 
 
     --color-gray-1: rgb(142, 142, 147);
@@ -266,5 +268,22 @@ a:active {
   min-height: 42px;
   /* color: hsla(0,0%,100%,0.2); */
   color: transparent;
+}
+
+caption {
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: var(--font-weight--regular);
+  letter-spacing: 0.08em;
+  display: inline-block;
+  text-align: left;
+}
+
+hr {
+  height: 1px;
+  border-width: 0;
+  background-image: var(--img-background--text);
+  background-position-x: center;
+  background-position-y: bottom;
 }
 </style>

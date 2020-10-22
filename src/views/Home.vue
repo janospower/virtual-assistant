@@ -3,7 +3,7 @@
    class="home"
    :style="{ backgroundImage: homeBackgroundImage }"
   >
-    <!-- <button type="button" @click="heardKeyWord('sun')" name="button">sun</button> -->
+    <button type="button" @click="heardKeyWord('voice')" name="button">sun</button>
     <Motion
      :values="responseCurrentState"
      tag="div"
@@ -29,7 +29,7 @@
          padding="13px"
          v-if="richResponse && wake" >
          <compass v-if="richResponseType == 'compass'"></compass>
-         <div v-if="richResponseType == 'voice'">Voice settings</div>
+         <settings v-if="richResponseType == 'voice'"></settings>
         </v-squircle>
       </transition>
 
@@ -63,6 +63,7 @@
   import SpeechToText from '@/components/speech-to-text.vue'
   import Waves from '@/components/waves.vue'
   import Compass from '@/components/compass.vue'
+  import Settings from '@/components/settings.vue'
   import sunInfo from '@/mixins/sunInfo.js'
   import micMeter from '@/mixins/micMeter.js'
   export default {
@@ -73,7 +74,8 @@
     components: {
       SpeechToText,
       Waves,
-      Compass
+      Compass,
+      Settings
     },
     data() {
       return {
