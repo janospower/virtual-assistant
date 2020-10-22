@@ -35,6 +35,9 @@
           "sun",
           "sunset",
           "voice",
+          "Voice",
+          "Sun",
+          "Sunset",
           "sound"
         ]
       }

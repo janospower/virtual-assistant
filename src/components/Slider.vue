@@ -36,7 +36,7 @@ export default {
         clickable: false,
         duration: 0.5,
         adsorb: false,
-        lazy: true,
+        lazy: false,
         tooltip: 'none',
         tooltipPlacement: 'top',
         tooltipFormatter: void 0,

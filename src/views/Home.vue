@@ -119,13 +119,20 @@
         responseAudio: null,
         homeBackgroundImage: "var(--img-background)",
         waveMover: null,
+        time: 0
       }
     },
     methods: {
       setVocalTrf(trf) {
         this.vocalTrf = trf;
-        this.responseAudioURL = require(`@/assets/audio/sun--olivia--vocaltrf-${this.vocalTrf.pitch}-${this.vocalTrf.formant}.mp3`);
+        this.responseAudioURL = require(`@/assets/audio/voice-settings/voice-settings-${this.vocalTrf.pitch}-${this.vocalTrf.formant}.mp3`);
+        this.time = this.responseAudio.currentTime;
+        this.responseAudio.pause();
         this.responseAudio = new Audio(this.responseAudioURL);
+        this.responseAudio.currentTime = this.time;
+        if (this.responseAudio.currentTime > 24) {
+          this.responseAudio.currentTime = 0;
+        }
         this.responseAudio.play();
       },
       heardKeyWord (keyword) {
@@ -135,7 +142,7 @@
         }, 1500);
 
         switch (keyword) {
-          case "sun" || "sunset":
+          case "sun" || "sunset" || "Sun" || "Sunset":
             setTimeout(() => {
               this.richResponseType = "compass";
             }, 300);
@@ -143,7 +150,7 @@
 
             this.responseAudioURL = require(`@/assets/audio/sun--olivia--vocaltrf-${this.vocalTrf.pitch}-${this.vocalTrf.formant}.mp3`);
             break;
-          case "voice" || "sound":
+          case "voice" || "sound" || "Voice":
             setTimeout(() => {
               this.richResponseType = "voice";
             }, 300);
