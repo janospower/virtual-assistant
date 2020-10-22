@@ -61,6 +61,11 @@ main {
 .mask {
   position: absolute;
   pointer-events: none;
+  var(--color-gray-6-day);
+}
+
+.night-mode .mask {
+  var(--color-gray-6-night);
 }
 
 #iphone-shape {
