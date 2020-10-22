@@ -182,14 +182,16 @@
       window.addEventListener('message', function(event) {
         if (event.data == "wake") {
           _this.wake = false;
-          _this.richResponseType = "";
-          _this.richResponse = false;
-          _this.wake = true;
-          _this.listening = true;
-          _this.transcriptCurrentState = _this.elementStates.active;
-          _this.homeBackgroundImage = "var(--img-background--blurred)";
-          _this.beginDetect();
-          _this.moveWaves(_this);
+          setTimeout(() => {
+            _this.richResponseType = "";
+            _this.richResponse = false;
+            _this.wake = true;
+            _this.listening = true;
+            _this.transcriptCurrentState = _this.elementStates.active;
+            _this.homeBackgroundImage = "var(--img-background--blurred)";
+            _this.beginDetect();
+            _this.moveWaves(_this);
+          }, 200);
         }
         else if (event.data == "sleep") {
           clearInterval(_this.waveMover);
