@@ -104,7 +104,7 @@ a {
   right: calc( 50vw + 216px + 80px );
   width: 300px;
   font-family: system-ui, 'system', '-apple-system','HelveticaNeue', sans-serif;
-  font-size: 12px;
+  font-size: 10px;
   text-transform: uppercase;
   line-height: 1.3em;
   color: var(--color-gray-3-night);
@@ -134,7 +134,7 @@ a {
 .info div {
   display: grid;
   grid-template-columns: auto auto;
-  grid-gap: 13px;
+  grid-gap: 10px;
 }
 
 .info:hover {

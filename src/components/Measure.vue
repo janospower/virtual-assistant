@@ -74,6 +74,20 @@
           </svg>
         </Motion>
 
+        <div class="buttons">
+          <div class="button button-1">
+            <svg-injector :class-name="'js-svg-injector'" :src="require('@/assets/sf-symbols/back.svg')"></svg-injector>
+          </div>
+          <div class="buttons-right">
+            <div class="button button-2">
+              <svg-injector :class-name="'js-svg-injector'" :src="require('@/assets/sf-symbols/share.svg')"></svg-injector>
+            </div>
+            <div class="button button-3">
+              <svg-injector :class-name="'js-svg-injector'" :src="require('@/assets/sf-symbols/full.svg')"></svg-injector>
+            </div>
+          </div>
+        </div>
+
         </div>
       </transition>
   </div>
@@ -131,6 +145,47 @@ export default {
 </script>
 
 <style>
+
+.buttons {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  right: 8px;
+  height: 44px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
+  background-color: var(--color-background-blurred);
+  border-radius: 9px;
+  backdrop-filter: saturate(180%) blur(20px);
+  height: 100%;
+  width: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttons-right {
+  display: flex;
+}
+
+.button svg {
+  opacity: 0.7;
+}
+
+.button-2 {
+  margin-right: 1px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.button-3 {
+  margin-right: 1px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
 
 .hr--full {
   margin-right: -13px;
@@ -202,6 +257,7 @@ export default {
   position: absolute;
   top: calc( 50% - 36px );
   left: calc( 50% - 36px );
+  pointer-events: none;
 }
 
 .circle-inner {
