@@ -5,7 +5,7 @@
         <span>{{ timenow }}</span>
       </div>
       <div class="status-bar status-bar-right">
-        <img src="./assets/status-bar-right-side.svg" alt="Status indicators">
+        <img src="~@/assets/status-bar-right-side.svg" alt="Status indicators">
       </div>
     </header>
     <router-view/>
@@ -56,9 +56,9 @@
 
     --cubic-ease: cubic-bezier(0.165, 0.840, 0.440, 1.000);
 
-    --img-background: url('./assets/ios14-background-day.jpg');
-    --img-background--blurred: url('./assets/ios14-background-day--blurred.png');
-    --img-background--text: url('./assets/ios14-background-day--text.png');
+    --img-background: url('~@/assets/ios14-background-day.jpg');
+    --img-background--blurred: url('~@/assets/ios14-background-day--blurred.png');
+    --img-background--text: url('~@/assets/ios14-background-day--text.png');
 
     --gutter: 16px;
 
@@ -104,9 +104,9 @@
   --color-background-blurred: hsla(222, 100%, 11%, 0.5);
   --color-cursor: hsla(0, 0%, 100%, 0.6);
 
-  --img-background: url('./assets/ios14-background-night.jpg');
-  --img-background--blurred: url('./assets/ios14-background-night--blurred.png');
-  --img-background--text: url('./assets/ios14-background-night--text.png');
+  --img-background: url('~@/assets/ios14-background-night.jpg');
+  --img-background--blurred: url('~@/assets/ios14-background-night--blurred.png');
+  --img-background--text: url('~@/assets/ios14-background-night--text.png');
 
   --color-gray-1: rgb(142, 142, 147);
   --color-gray-2: rgb(99, 99, 102);

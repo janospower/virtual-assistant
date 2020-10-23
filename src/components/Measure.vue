@@ -32,7 +32,7 @@
             draggable='false'
             ondragstart="return false;"
             slot-scope="_shift"
-            :style="{ transform: `translate(${_shift.altitude}px, ${_shift.longitude}px)` }">
+            :style="{ transform: `translate(${_shift.longitude}px, ${_shift.altitude}px)` }">
          </Motion>
          <div class="circle">
            <div class="circle-inner">
@@ -55,8 +55,8 @@ export default {
     return {
       camera: false,
       shift: {
-        altitude: 0,
-        longitude: 0
+        altitude: -510,
+        longitude: -180
       },
       centerY: 0,
       centerX: 0,
@@ -69,9 +69,12 @@ export default {
   },
   methods: {
     imgShift(event) {
-      this.shift.altitude = (event.clientY - this.centerY) * -1;
-      this.shift.longitude = (event.clientX - this.centerX) * -1;
-      console.log(this.shift.altitude, this.shift.longitude);
+      let alt = ((event.clientY - this.centerY) * 1.5 + 510) * -1;
+      let long = ((event.clientX - this.centerX) * 1.5 + 180) * -1;
+      this.shift = {
+        altitude: alt,//event.clientY - this.centerY) * -1,
+        longitude: long//event.clientX - this.centerX) * -1
+      }
     }
   },
   mounted() {
@@ -119,8 +122,8 @@ export default {
 }
 
 .viewfinder img {
-  width: 100%;
-  margin-top: -130px;
+  width: 200%;
+
   backface-visibility: hidden;
   will-change: filter;
   transition-delay: .8s !important;
