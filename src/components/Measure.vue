@@ -115,7 +115,7 @@ export default {
         damping: 100,
         precision: 0.01,
       },
-      length: "0 m",
+      length: "0 m",
     }
   },
   methods: {
@@ -133,7 +133,7 @@ export default {
         this.circ = 1;
       }
 
-      this.length = Math.round(Math.sqrt( Math.abs((180-(long+370))*180 + (180-(alt+1200))*180) )) + " m";
+      this.length = Math.round(Math.sqrt( Math.abs((180-(long+370))*180 + (180-(alt+1200))*180) )) + " m";
     }
   },
   mounted() {

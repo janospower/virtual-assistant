@@ -167,30 +167,41 @@
           this.listening = false;
         }, 1500);
 
-        switch (keyword) {
-          case "sun" || "sunset" || "Sun" || "Sunset":
-            setTimeout(() => {
-              this.richResponseType = "compass";
-            }, 300);
-            this.responseText = "The sun will set right over there at " + this.sunsetStr + ".";
+        let activeCase = "";
 
-            this.responseAudioURL = require(`@/assets/audio/sun--olivia--vocaltrf-${this.vocalTrf.pitch}d-${this.vocalTrf.formant}d.mp3`);
+        switch (keyword) {
+          case "sun":
+          case "sunset":
+          case "Sun":
+          case "Sunset":
+            activeCase = "compass";
+            this.responseText = "The sun will set right over there at " + this.sunsetStr + ".";
             break;
-          case "voice" || "sound" || "Voice":
-            setTimeout(() => {
-              this.richResponseType = "voice";
-            }, 300);
+          case "voice":
+          case "sound":
+          case "Voice":
+            activeCase = "voice";
             this.responseText = "Gender is a construct, have a look at these settings:";
-            this.responseAudioURL = require(`@/assets/audio/gender/gender-${this.vocalTrf.pitch}d-${this.vocalTrf.formant}d.mp3`);
             break;
-          case "tall" || "Tall" || "buidling" || "Buidling":
-            setTimeout(() => {
-              this.richResponseType = "measure";
-            }, 300);
+          case "tall":
+          case "Tall":
+          case "building":
+          case "Building":
+            activeCase = "measure";
             this.responseText = "You'll need to show me which one.";
-            this.responseAudioURL = require(`@/assets/audio/measure/measure-${this.vocalTrf.pitch}d-${this.vocalTrf.formant}d.mp3`);
+            break;
+          case "eat":
+          case "Eat":
+          case "allergic":
+          case "chocolate":
+            activeCase = "food";
+            this.responseText = "Could you show me the packaging?";
             break;
         }
+        setTimeout(() => {
+          this.richResponseType = activeCase;
+        }, 300);
+        this.responseAudioURL = require(`@/assets/audio/${activeCase}/${activeCase}-${this.vocalTrf.pitch}d-${this.vocalTrf.formant}d.mp3`);
         this.responseCurrentState = this.elementStates.active;
         this.richResponse = true;
         this.responseAudio = new Audio(this.responseAudioURL);
@@ -211,7 +222,7 @@
       for (var i = 0; i < 9; i++) {
         this.settingsAudios[i] = [];
         for (var j = 0; j < 9; j++) {
-          let settingsURL = require(`@/assets/audio/voice-settings/voice-settings-${i-4}d-${j-4}d.mp3`)
+          let settingsURL = require(`@/assets/audio/voice-settings/voice-${i-4}d-${j-4}d.mp3`)
           this.settingsAudios[i][j] = new Audio(settingsURL);
         }
       }

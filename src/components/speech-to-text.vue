@@ -45,7 +45,11 @@
           "tall",
           "Tall",
           "building",
-          "Building"
+          "Building",
+          "eat",
+          "Eat",
+          "allergic",
+          "chocolate"
         ]
       }
     },
