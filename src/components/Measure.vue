@@ -35,6 +35,13 @@
             :style="{ transform: `translate(${_shift.longitude}px, ${_shift.altitude}px)` }">
          </Motion>
 
+         <div class="length">
+           {{length}}
+           <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+           <path fill-rule="evenodd" clip-rule="evenodd" d="M1.55831 0.649902C1.07583 0.649902 0.650024 1.00837 0.650024 1.5241C0.650024 1.76978 0.754792 1.98913 0.912341 2.1463L0.917467 2.15142L5.10833 5.9999L0.917467 9.84839L0.912341 9.8535C0.756366 10.0091 0.650024 10.2222 0.650024 10.4757C0.650024 10.9914 1.07583 11.3499 1.55831 11.3499C1.80092 11.3499 2.02247 11.2681 2.20121 11.101L7.05892 6.63783L7.06169 6.63524C7.23619 6.4714 7.35002 6.25649 7.35002 5.9999C7.35002 5.74964 7.24119 5.52518 7.05716 5.36037L2.20022 0.892049L2.19543 0.887804C2.019 0.731347 1.80072 0.649902 1.55831 0.649902Z" fill="#000000"/>
+           </svg>
+         </div>
+
          <div class="circle">
            <div class="circle-inner">
            </div>
@@ -93,7 +100,8 @@ export default {
         stiffness: 200,
         damping: 100,
         precision: 0.01,
-      }
+      },
+      length: "0 m",
     }
   },
   methods: {
@@ -110,6 +118,8 @@ export default {
       else {
         this.circ = 1;
       }
+
+      this.length = Math.round(Math.sqrt( Math.abs((180-(long+370))*180 + (180-(alt+1200))*180) )) + " m";
     }
   },
   mounted() {
@@ -165,6 +175,25 @@ export default {
   filter: blur(0px);
   transition: filter .4s ease;
   user-select: none;
+}
+
+.length {
+  position: absolute;
+  top: 8px;
+  left: calc( 50% - 45px );
+  width: 90px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  color: black;
+  background-color: var(--color-yellow);
+  border-radius: 12px;
+}
+
+.length svg {
+  display: inline;
+  margin-left: 6px;
+  opacity: .5;
 }
 
 .circle {
