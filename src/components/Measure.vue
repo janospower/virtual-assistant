@@ -34,11 +34,39 @@
             slot-scope="_shift"
             :style="{ transform: `translate(${_shift.longitude}px, ${_shift.altitude}px)` }">
          </Motion>
+
          <div class="circle">
            <div class="circle-inner">
-
            </div>
+           <Motion
+            :value="circ"
+            tag="div"
+            spring="wobbly"
+            data-cursor-hover >
+              <div
+               class="circle-outer"
+               slot-scope="circ"
+               :style="{transform: `scale(${circ.value})`}">
+              </div>
+            </Motion>
          </div>
+
+
+         <Motion
+          :values="shift"
+          tag="div"
+          :spring="spring"
+          data-cursor-hover >
+           <svg
+            slot-scope="_shift"
+            class="line"
+            width="359"
+            height="359"
+            viewBox="0 0 359 359" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line :x1="_shift.longitude+370" :y1="_shift.altitude+1200" x2="50%" y2="50%" stroke="var(--color-yellow)" stroke-width="1.5"/>
+          </svg>
+        </Motion>
+
         </div>
       </transition>
   </div>
@@ -60,6 +88,7 @@ export default {
       },
       centerY: 0,
       centerX: 0,
+      circ: 1,
       spring: {
         stiffness: 200,
         damping: 100,
@@ -74,6 +103,12 @@ export default {
       this.shift = {
         altitude: alt,//event.clientY - this.centerY) * -1,
         longitude: long//event.clientX - this.centerX) * -1
+      }
+      if ( -450 < alt && alt < -410 && -170 < long && long < -130 ) {
+        this.circ = .7;
+      }
+      else {
+        this.circ = 1;
       }
     }
   },
@@ -135,11 +170,6 @@ export default {
 .circle {
   width: 72px;
   height: 72px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 204, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: absolute;
   top: calc( 50% - 36px );
   left: calc( 50% - 36px );
@@ -149,7 +179,23 @@ export default {
   width: 6px;
   height: 6px;
   border-radius: 50%;
+  position: absolute;
+  top: calc( 50% - 3px );
+  left: calc( 50% - 3px );
   background-color: var(--color-yellow);
+}
+
+.circle-outer {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 204, 0, 0.5);
+}
+
+.line {
+  position: absolute;
+  top: 0;
+  pointer-events: none;
 }
 
 .dissolve-enter-active,
