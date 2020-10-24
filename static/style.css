@@ -38,6 +38,12 @@
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+  cursor: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='3' cy='3' r='3' fill='black' fill-opacity='0.6'/%3E%3C/svg%3E%0A"), pointer;
+}
+
+.night-mode *,
+body.night-mode {
+  cursor: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='3' cy='3' r='3' fill='white' fill-opacity='0.6'/%3E%3C/svg%3E%0A"), pointer;
 }
 
 body {
@@ -56,6 +62,16 @@ main {
   margin: 0px auto;
   position: relative;
   top: calc( 50vh - 431px );
+  transition: all 1s var(--cubic-ease);
+  transform: translateY(0vh);
+}
+
+main.hidden {
+  transform: translateY(90vh);
+}
+
+main.hidden iframe {
+  /* opacity: 0; */
 }
 
 .mask {
@@ -83,14 +99,15 @@ iframe {
   outline: none;
   top: 25px;
   left: 28px;
+  transition: all 1s var(--cubic-ease);
+  will-change: transform;
 }
 
 aside.buttons {
   position: absolute;
-  top: calc( 50vh + 431px - 60px );
+  bottom: calc( 50vh - 431px + 60px );
   right: calc( 50vw + 216px + 80px );
   width: 60px;
-  height: 60px;
 }
 
 a {
@@ -162,11 +179,10 @@ button {
   border: none;
   outline: none;
 	font: inherit;
-	cursor: pointer;
   background: inherit;
 }
 
-.btn--day-night-mode {
+.btn {
   background-color: var(--color-gray-6-day);
   border-radius: 50%;
   width: 100%;
@@ -174,33 +190,59 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 20px;
+  width: 60px;
+  height: 60px;
   transition:
     background-color .3s cubic-bezier(0.165, 0.840, 0.440, 1.000),
     transform 1s var(--cubic-ease);
 }
 
-.night-mode .btn--day-night-mode {
+.night-mode .btn {
   background-color: var(--color-gray-6-night);
+}
+
+.night-mode .btn--day-night-mode {
   transform: rotate(180deg);
 }
 
-.btn--day-night-mode svg {
+.btn svg {
   transition: transform .3s var(--cubic-ease);
 }
 
-.btn--day-night-mode:hover svg {
+.btn:hover svg {
   transform: scale(1.2);
 }
 
-#icon-day-night-mode-stroke, #icon-day-night-mode-fill {
+.btn:active svg {
+  transform: scale(1);
+}
+
+.btn.active {
+  background-color: var(--color-gray-6-night);
+}
+
+.night-mode .btn.active {
+  background-color: var(--color-gray-6-day);
+}
+
+.night-mode .btn.active .icon-day-night-mode-fill {
+  fill: black;
+}
+
+.btn.active .icon-day-night-mode-fill {
+  fill: white;
+}
+
+.icon-day-night-mode-stroke, .icon-day-night-mode-fill {
   transition: all .3s var(--cubic-ease)
 }
 
-.night-mode #icon-day-night-mode-stroke {
+.night-mode .icon-day-night-mode-stroke {
   stroke: white;
 }
 
-.night-mode #icon-day-night-mode-fill {
+.night-mode .icon-day-night-mode-fill {
   fill: white;
 }
 
