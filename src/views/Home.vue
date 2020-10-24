@@ -206,7 +206,8 @@
           case "Sun":
           case "Sunset":
             activeCase = "compass";
-            this.responseText = "The sun will set right over there at " + this.sunsetStr + ".";
+            this.responseText = "The sun will set right over there at 16:02.";
+            // this.responseText = "The sun will set right over there at " + this.sunsetStr + ".";
             break;
           case "voice":
           case "sound":
@@ -227,6 +228,12 @@
           case "chocolate":
             activeCase = "food";
             this.responseText = "Could you show me the packaging?";
+            break;
+          case "Call":
+          case "call":
+          case "directions":
+            activeCase = "airpods";
+            this.responseText = "Oh kay? I’m no-one to judge! You’ll need to unlock your device first! You can also authenticate verbally, just say the name of your first crush. Promise, I won’t tell anyone.";
             break;
         }
         setTimeout(() => {
@@ -334,7 +341,7 @@ button {
 }
 
 .response--info {
-  margin-bottom: 0px;
+  margin: 0px;
   display: block;
 }
 

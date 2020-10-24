@@ -57,6 +57,7 @@ body.night-mode {
 body {
   height: 100vh;
   background-color: white;
+  overflow: hidden;
   transition: background-color 1s var(--cubic-ease);
 }
 

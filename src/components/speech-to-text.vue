@@ -49,7 +49,10 @@
           "eat",
           "Eat",
           "allergic",
-          "chocolate"
+          "chocolate",
+          "call",
+          "Call",
+          "directions"
         ]
       }
     },
