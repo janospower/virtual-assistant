@@ -52,7 +52,9 @@
           "chocolate",
           "call",
           "Call",
-          "directions"
+          "directions",
+          "Tell",
+          "tell"
         ]
       }
     },

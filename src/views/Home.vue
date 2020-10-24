@@ -232,6 +232,8 @@
           case "Call":
           case "call":
           case "directions":
+          case "Tell":
+          case "tell":
             activeCase = "airpods";
             this.responseText = "Oh kay? I’m no-one to judge! You’ll need to unlock your device first! You can also authenticate verbally, just say the name of your first crush. Promise, I won’t tell anyone.";
             break;
