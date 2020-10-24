@@ -16,6 +16,7 @@
        slot-scope="_responseCurrentState"
        :style="{ transform: `translateY(${_responseCurrentState.offset}px)`, opacity: _responseCurrentState.opacity }" >
         {{responseText}}
+        <caption class="info response--info">{{responseTextSecondary}}</caption>
       </v-squircle>
     </Motion>
 
@@ -31,6 +32,7 @@
          <settings @vocal-trf-changed="setVocalTrf($event)"></settings>
         </v-squircle>
       </transition>
+
        <transition name="dissolve" appear>
          <v-squircle
           class="response--rich"
@@ -40,6 +42,7 @@
           <compass></compass>
          </v-squircle>
        </transition>
+
       <transition name="dissolve" appear>
         <v-squircle
          class="response--rich"
@@ -49,6 +52,16 @@
          <measure></measure>
         </v-squircle>
       </transition>
+
+     <transition name="dissolve" appear>
+       <v-squircle
+        class="response--rich response--rich--short"
+        radius="20px"
+        padding="13px"
+        v-if="richResponseType == 'food' && wake" >
+        <food @barcode="barcodeRecognized" ></food>
+       </v-squircle>
+     </transition>
 
       <Motion
        :values="transcriptCurrentState"
@@ -81,6 +94,7 @@
   import Waves from '@/components/waves.vue'
   import Compass from '@/components/compass.vue'
   import Measure from '@/components/Measure.vue'
+  import Food from '@/components/Food.vue'
   import Settings from '@/components/settings.vue'
   import sunInfo from '@/mixins/sunInfo.js'
   import micMeter from '@/mixins/micMeter.js'
@@ -94,7 +108,8 @@
       Waves,
       Compass,
       Settings,
-      Measure
+      Measure,
+      Food
     },
     data() {
       return {
@@ -126,6 +141,7 @@
         richResponse: false,
         richResponseType: "",
         responseText: "",
+        responseTextSecondary: "",
         responseAudioURL: "",
         responseAudio: null,
         homeBackgroundImage: "var(--img-background)",
@@ -136,6 +152,21 @@
       }
     },
     methods: {
+      barcodeRecognized() {
+        this.wake = false;
+        let _this = this;
+        setTimeout(function () {
+          _this.responseText = "This product contains traces of soy, which you’re allergic to.";
+          _this.responseTextSecondary = "Learn more in Health →";
+          _this.responseAudioURL = require(`@/assets/audio/soy/soy-${_this.vocalTrf.pitch}d-${_this.vocalTrf.formant}d.mp3`);
+          _this.wake = true;
+          _this.richResponse = false;
+          _this.richResponseType = "";
+          _this.responseCurrentState = _this.elementStates.active;
+          _this.responseAudio = new Audio(_this.responseAudioURL);
+          _this.responseAudio.play();
+        }, 300);
+      },
       setVocalTrf(trf) {
         this.time = this.settingsAudios[trf.pitch+4][trf.formant+4].currentTime;
         if (this.time == 0 || this.settingsAudios[trf.pitch+4][trf.formant+4].currentTime > 24) {
@@ -292,10 +323,19 @@ button {
   background-position-y: -300px;
 }
 
+.response--rich--short >>> .v-squircle--slot {
+  background-position-y: -510px;
+}
+
 .responses {
   position: absolute;
   width: 100%;
   top: 80px;
+}
+
+.response--info {
+  margin-bottom: 0px;
+  display: block;
 }
 
 .responses >>> .v-squircle--slot {

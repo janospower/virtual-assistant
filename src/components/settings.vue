@@ -81,13 +81,6 @@ export default {
   margin-top: 20px;
 }
 
-.info {
-  text-transform: none;
-  letter-spacing: 0;
-  margin-top: 6px;
-  margin-bottom: 13px;
-}
-
 .link {
   color: var(--color-blue)
 }

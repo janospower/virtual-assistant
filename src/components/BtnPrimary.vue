@@ -20,6 +20,8 @@ export default {
   margin-bottom: -13px;
   margin-left: -13px;
   margin-right: -13px;
+  margin-top: -13px;
+  padding-top: 13px;
   padding-left: 13px;
   padding-right: 13px;
   border-radius: 0 0 11px 11px;

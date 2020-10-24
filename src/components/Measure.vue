@@ -154,6 +154,7 @@ export default {
   height: 44px;
   display: flex;
   justify-content: space-between;
+  pointer-events: none;
 }
 
 .button {
