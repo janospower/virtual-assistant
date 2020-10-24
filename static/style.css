@@ -46,6 +46,14 @@ body.night-mode {
   cursor: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='3' cy='3' r='3' fill='white' fill-opacity='0.6'/%3E%3C/svg%3E%0A"), pointer;
 }
 
+.btn:hover, .btn:active {
+  cursor: url("data:image/svg+xml,%3Csvg width='8' height='8' viewBox='0 0 8 8' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='4' cy='4' r='4' fill='black' fill-opacity='0.6'/%3E%3C/svg%3E%0A"), pointer;
+}
+
+.night-mode .btn:hover, .night-mode .btn:active {
+  cursor: url("data:image/svg+xml,%3Csvg width='8' height='8' viewBox='0 0 8 8' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='4' cy='4' r='4' fill='white' fill-opacity='0.6'/%3E%3C/svg%3E%0A"), pointer;
+}
+
 body {
   height: 100vh;
   background-color: white;
@@ -64,14 +72,40 @@ main {
   top: calc( 50vh - 431px );
   transition: all 1s var(--cubic-ease);
   transform: translateY(0vh);
+  transition-delay: .5s;
 }
 
 main.hidden {
   transform: translateY(90vh);
+  transition-delay: 0s;
 }
 
 main.hidden iframe {
   /* opacity: 0; */
+}
+
+.callout {
+  transition: all 1s ease-in;
+  transition-delay: 0s;
+  color: var(--color-gray-1-night);
+  opacity: 0;
+  transform: translateY(-40px);
+  font-family: system-ui, 'system', '-apple-system','HelveticaNeue', sans-serif;
+  font-size: 28px;
+  font-weight: 500;
+  position: absolute;
+  width: 100%;
+  pointer-events: none;
+  left: 0;
+  top: 50vh;
+  text-align: center;
+}
+
+.callout.active {
+  transition: all 1s var(--cubic-ease);
+  opacity: 1;
+  transform: translateY(0px);
+  transition-delay: .5s;
 }
 
 .mask {

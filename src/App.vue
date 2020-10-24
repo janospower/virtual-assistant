@@ -185,6 +185,11 @@ a:active {
   height: 100vh;
 }
 
+#app,
+* {
+  cursor: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='3' cy='3' r='3' fill='black' fill-opacity='0.6'/%3E%3C/svg%3E%0A"), pointer !important;
+}
+
 .iphone--home-indicator {
   height: 40px;
   width: 100%;
@@ -246,7 +251,7 @@ a:active {
 }
 
 .cursor-fx__inner__inside {
-  color: var(--color-cursor) !important;
+  display: none !important;
 }
 
 .cursor-fx, .cursor-fx > div {
